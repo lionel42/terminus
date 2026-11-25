@@ -37,10 +37,10 @@ You can also configure these environment variables as needed:
 
 ### Secrets
 
-Generate and set secure values for the database password, token signing key, and first superuser password:
+Set the connection URL of your external MySQL server, and generate secure values for the token signing key and first superuser password:
 
 ```bash
-export POSTGRES_PASSWORD="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+export DATABASE_URL="mysql://USER:PASSWORD@HOST:3306/DATABASE"
 export SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
 export FIRST_SUPERUSER_PASSWORD="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
 ```
@@ -84,7 +84,7 @@ To enable Sentry, add the optional `SENTRY_DSN` repository variable.
 
 Add these repository secrets:
 
-* `POSTGRES_PASSWORD`
+* `DATABASE_URL`
 * `SECRET_KEY`
 * `FIRST_SUPERUSER_PASSWORD`
 

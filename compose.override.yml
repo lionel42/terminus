@@ -23,10 +23,6 @@ services:
       - --api
       # Enable the Dashboard and API in insecure mode for local development
       - --api.insecure=true
-  db:
-    ports:
-      - "5432:5432"
-
   adminer:
     ports:
       - "8080:8080"
@@ -62,11 +58,17 @@ services:
     # TODO: remove once coverage is done locally
     volumes:
       - ./backend/htmlcov:/app/backend/htmlcov
+    # Lets the container reach services on the host machine (e.g. a MySQL
+    # container published on a host port) via host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       FASTAPI_ENV: "development"
       SMTP_HOST: "mailpit"
       SMTP_PORT: "1025"
       SMTP_TLS: "false"
+      # Inside the container, "localhost" is the container itself
+      DATABASE_URL: ${DOCKER_DATABASE_URL:-${DATABASE_URL}}
 
   mailpit:
     image: axllent/mailpit
