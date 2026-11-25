@@ -27,6 +27,9 @@ class Settings(BaseSettings):
     FASTAPI_ENV: Literal["development"] | None = None
 
     PROJECT_NAME: str
+    # Allow anyone to create an account via /users/signup.
+    # When False, only superusers can create users (POST /users/).
+    USERS_OPEN_REGISTRATION: bool = False
     SENTRY_DSN: HttpUrl | None = None
     # MySQL connection URL, e.g. mysql://user:password@host:3306/dbname
     # Optional TLS: append ?ssl_ca=/path/to/ca.pem

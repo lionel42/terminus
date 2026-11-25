@@ -44,6 +44,7 @@ services:
       # External MySQL server, e.g. mysql://user:password@host:3306/dbname
       DATABASE_URL: ${DATABASE_URL:?Variable not set}
       SENTRY_DSN: ${SENTRY_DSN:-}
+      USERS_OPEN_REGISTRATION: ${USERS_OPEN_REGISTRATION:-false}
 
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]

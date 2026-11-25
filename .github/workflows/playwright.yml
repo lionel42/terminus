@@ -50,6 +50,23 @@ jobs:
         shardIndex: [1, 2, 3, 4]
         shardTotal: [4]
       fail-fast: false
+    services:
+      # Matches DOCKER_DATABASE_URL in .env (reached via host.docker.internal)
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: changethis
+          MYSQL_DATABASE: terminus
+          MYSQL_USER: terminus
+          MYSQL_PASSWORD: changethis
+        ports:
+          - 3308:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -pchangethis"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    env:
+      # The e2e tests create their users through the sign-up page
+      USERS_OPEN_REGISTRATION: "true"
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
