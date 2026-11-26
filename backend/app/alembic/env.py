@@ -19,7 +19,7 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
 
-from app.models import SQLModel  # noqa
+from app.models import LowerString, SQLModel  # noqa
 from app.core.config import settings # noqa
 
 target_metadata = SQLModel.metadata
@@ -28,6 +28,13 @@ target_metadata = SQLModel.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+
+def render_item(type_, obj, autogen_context):
+    # LowerString only lower-cases values in Python; in the DB it is a VARCHAR
+    if type_ == "type" and isinstance(obj, LowerString):
+        return f"sa.String(length={obj.impl.length}, collation={obj.impl.collation!r})"
+    return False
 
 
 def get_url():
@@ -48,7 +55,8 @@ def run_migrations_offline():
     """
     url = get_url()
     context.configure(
-        url=url, target_metadata=target_metadata, literal_binds=True, compare_type=True
+        url=url, target_metadata=target_metadata, literal_binds=True, compare_type=True,
+        render_item=render_item,
     )
 
     with context.begin_transaction():
@@ -73,7 +81,8 @@ def run_migrations_online():
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata, compare_type=True
+            connection=connection, target_metadata=target_metadata, compare_type=True,
+            render_item=render_item,
         )
 
         with context.begin_transaction():

@@ -1,33 +1,29 @@
 import { EllipsisVertical } from "lucide-react"
-import { useState } from "react"
+import { type ReactNode, useState } from "react"
 
-import type { ItemPublic } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import DeleteItem from "../Items/DeleteItem"
-import EditItem from "../Items/EditItem"
 
-interface ItemActionsMenuProps {
-  item: ItemPublic
-}
-
-export const ItemActionsMenu = ({ item }: ItemActionsMenuProps) => {
+/** "⋮" menu; `children` receives a callback that closes the menu. */
+export function ActionsMenu({
+  children,
+}: {
+  children: (close: () => void) => ReactNode
+}) {
   const [open, setOpen] = useState(false)
-
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" aria-label="Actions">
           <EllipsisVertical />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <EditItem item={item} onSuccess={() => setOpen(false)} />
-        <DeleteItem id={item.id} onSuccess={() => setOpen(false)} />
+        {children(() => setOpen(false))}
       </DropdownMenuContent>
     </DropdownMenu>
   )

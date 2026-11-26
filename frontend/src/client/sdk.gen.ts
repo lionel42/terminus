@@ -2,7 +2,7 @@
 
 import { type Client, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
+import type { compoundsCreateCompoundData, compoundsCreateCompoundErrors, compoundsCreateCompoundResponses, compoundsDeleteCompoundData, compoundsDeleteCompoundErrors, compoundsDeleteCompoundResponses, compoundsReadCompoundData, compoundsReadCompoundErrors, compoundsReadCompoundResponses, compoundsReadCompoundsData, compoundsReadCompoundsErrors, compoundsReadCompoundsResponses, compoundsUpdateCompoundData, compoundsUpdateCompoundErrors, compoundsUpdateCompoundResponses, containersCreateContainerData, containersCreateContainerErrors, containersCreateContainerResponses, containersDeleteContainerData, containersDeleteContainerErrors, containersDeleteContainerResponses, containersReadContainerCurrentSampleData, containersReadContainerCurrentSampleErrors, containersReadContainerCurrentSampleResponses, containersReadContainerData, containersReadContainerErrors, containersReadContainerResponses, containersReadContainerSamplesData, containersReadContainerSamplesErrors, containersReadContainerSamplesResponses, containersReadContainersData, containersReadContainersErrors, containersReadContainersResponses, containersUpdateContainerData, containersUpdateContainerErrors, containersUpdateContainerResponses, instrumentsCreateInstrumentData, instrumentsCreateInstrumentErrors, instrumentsCreateInstrumentResponses, instrumentsDeleteInstrumentData, instrumentsDeleteInstrumentErrors, instrumentsDeleteInstrumentResponses, instrumentsReadInstrumentData, instrumentsReadInstrumentErrors, instrumentsReadInstrumentResponses, instrumentsReadInstrumentsData, instrumentsReadInstrumentsErrors, instrumentsReadInstrumentsResponses, instrumentsUpdateInstrumentData, instrumentsUpdateInstrumentErrors, instrumentsUpdateInstrumentResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, measurementsCreateMeasurementData, measurementsCreateMeasurementErrors, measurementsCreateMeasurementResponses, measurementsDeleteMeasurementData, measurementsDeleteMeasurementErrors, measurementsDeleteMeasurementResponses, measurementsImportMeasurementsData, measurementsImportMeasurementsErrors, measurementsImportMeasurementsResponses, measurementsReadMeasurementData, measurementsReadMeasurementErrors, measurementsReadMeasurementResponses, measurementsReadMeasurementsData, measurementsReadMeasurementsErrors, measurementsReadMeasurementsResponses, measurementsReplaceMeasurementResultsData, measurementsReplaceMeasurementResultsErrors, measurementsReplaceMeasurementResultsResponses, measurementsUpdateMeasurementData, measurementsUpdateMeasurementErrors, measurementsUpdateMeasurementResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, resultsReadResultsCsvData, resultsReadResultsCsvErrors, resultsReadResultsCsvResponses, resultsReadResultsData, resultsReadResultsErrors, resultsReadResultsResponses, samplesCreateSampleData, samplesCreateSampleErrors, samplesCreateSampleResponses, samplesDeleteSampleData, samplesDeleteSampleErrors, samplesDeleteSampleResponses, samplesReadSampleData, samplesReadSampleErrors, samplesReadSampleResponses, samplesReadSamplesData, samplesReadSamplesErrors, samplesReadSamplesResponses, samplesUpdateSampleData, samplesUpdateSampleErrors, samplesUpdateSampleResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -284,31 +284,31 @@ export class UtilsService {
     }
 }
 
-export class ItemsService {
+export class CompoundsService {
     /**
-     * Read Items
+     * Read Compounds
      *
-     * Retrieve items.
+     * List compounds.
      */
-    public static readItems<ThrowOnError extends boolean = true>(options?: Options<itemsReadItemsData, ThrowOnError>) {
-        return (options?.client ?? client).get<itemsReadItemsResponses, itemsReadItemsErrors, ThrowOnError>({
+    public static readCompounds<ThrowOnError extends boolean = true>(options?: Options<compoundsReadCompoundsData, ThrowOnError>) {
+        return (options?.client ?? client).get<compoundsReadCompoundsResponses, compoundsReadCompoundsErrors, ThrowOnError>({
             responseType: 'json',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/items/',
+            url: '/api/v1/compounds/',
             ...options
         });
     }
     
     /**
-     * Create Item
+     * Create Compound
      *
-     * Create new item.
+     * Create a compound.
      */
-    public static createItem<ThrowOnError extends boolean = true>(options: Options<itemsCreateItemData, ThrowOnError>) {
-        return (options.client ?? client).post<itemsCreateItemResponses, itemsCreateItemErrors, ThrowOnError>({
+    public static createCompound<ThrowOnError extends boolean = true>(options: Options<compoundsCreateCompoundData, ThrowOnError>) {
+        return (options.client ?? client).post<compoundsCreateCompoundResponses, compoundsCreateCompoundErrors, ThrowOnError>({
             responseType: 'json',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/items/',
+            url: '/api/v1/compounds/',
             ...options,
             headers: {
                 'Content-Type': 'application/json',
@@ -318,48 +318,465 @@ export class ItemsService {
     }
     
     /**
-     * Delete Item
+     * Delete Compound
      *
-     * Delete an item.
+     * Delete a compound (only if no measurement result uses it).
      */
-    public static deleteItem<ThrowOnError extends boolean = true>(options: Options<itemsDeleteItemData, ThrowOnError>) {
-        return (options.client ?? client).delete<itemsDeleteItemResponses, itemsDeleteItemErrors, ThrowOnError>({
+    public static deleteCompound<ThrowOnError extends boolean = true>(options: Options<compoundsDeleteCompoundData, ThrowOnError>) {
+        return (options.client ?? client).delete<compoundsDeleteCompoundResponses, compoundsDeleteCompoundErrors, ThrowOnError>({
             responseType: 'json',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/items/{id}',
+            url: '/api/v1/compounds/{compound_id}',
             ...options
         });
     }
     
     /**
-     * Read Item
+     * Read Compound
      *
-     * Get item by ID.
+     * Get a compound by id.
      */
-    public static readItem<ThrowOnError extends boolean = true>(options: Options<itemsReadItemData, ThrowOnError>) {
-        return (options.client ?? client).get<itemsReadItemResponses, itemsReadItemErrors, ThrowOnError>({
+    public static readCompound<ThrowOnError extends boolean = true>(options: Options<compoundsReadCompoundData, ThrowOnError>) {
+        return (options.client ?? client).get<compoundsReadCompoundResponses, compoundsReadCompoundErrors, ThrowOnError>({
             responseType: 'json',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/items/{id}',
+            url: '/api/v1/compounds/{compound_id}',
             ...options
         });
     }
     
     /**
-     * Update Item
+     * Update Compound
      *
-     * Update an item.
+     * Update a compound.
      */
-    public static updateItem<ThrowOnError extends boolean = true>(options: Options<itemsUpdateItemData, ThrowOnError>) {
-        return (options.client ?? client).put<itemsUpdateItemResponses, itemsUpdateItemErrors, ThrowOnError>({
+    public static updateCompound<ThrowOnError extends boolean = true>(options: Options<compoundsUpdateCompoundData, ThrowOnError>) {
+        return (options.client ?? client).patch<compoundsUpdateCompoundResponses, compoundsUpdateCompoundErrors, ThrowOnError>({
             responseType: 'json',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/items/{id}',
+            url: '/api/v1/compounds/{compound_id}',
             ...options,
             headers: {
                 'Content-Type': 'application/json',
                 ...options.headers
             }
+        });
+    }
+}
+
+export class InstrumentsService {
+    /**
+     * Read Instruments
+     *
+     * List instruments.
+     */
+    public static readInstruments<ThrowOnError extends boolean = true>(options?: Options<instrumentsReadInstrumentsData, ThrowOnError>) {
+        return (options?.client ?? client).get<instrumentsReadInstrumentsResponses, instrumentsReadInstrumentsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/instruments/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Instrument
+     *
+     * Create an instrument.
+     */
+    public static createInstrument<ThrowOnError extends boolean = true>(options: Options<instrumentsCreateInstrumentData, ThrowOnError>) {
+        return (options.client ?? client).post<instrumentsCreateInstrumentResponses, instrumentsCreateInstrumentErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/instruments/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Instrument
+     *
+     * Delete an instrument (only if it has no measurements).
+     */
+    public static deleteInstrument<ThrowOnError extends boolean = true>(options: Options<instrumentsDeleteInstrumentData, ThrowOnError>) {
+        return (options.client ?? client).delete<instrumentsDeleteInstrumentResponses, instrumentsDeleteInstrumentErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/instruments/{instrument_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Instrument
+     *
+     * Get an instrument by id.
+     */
+    public static readInstrument<ThrowOnError extends boolean = true>(options: Options<instrumentsReadInstrumentData, ThrowOnError>) {
+        return (options.client ?? client).get<instrumentsReadInstrumentResponses, instrumentsReadInstrumentErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/instruments/{instrument_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Instrument
+     *
+     * Update an instrument.
+     */
+    public static updateInstrument<ThrowOnError extends boolean = true>(options: Options<instrumentsUpdateInstrumentData, ThrowOnError>) {
+        return (options.client ?? client).patch<instrumentsUpdateInstrumentResponses, instrumentsUpdateInstrumentErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/instruments/{instrument_id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class ContainersService {
+    /**
+     * Read Containers
+     *
+     * List containers.
+     */
+    public static readContainers<ThrowOnError extends boolean = true>(options?: Options<containersReadContainersData, ThrowOnError>) {
+        return (options?.client ?? client).get<containersReadContainersResponses, containersReadContainersErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/containers/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Container
+     *
+     * Create a container.
+     */
+    public static createContainer<ThrowOnError extends boolean = true>(options: Options<containersCreateContainerData, ThrowOnError>) {
+        return (options.client ?? client).post<containersCreateContainerResponses, containersCreateContainerErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/containers/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Container
+     *
+     * Delete a container (only if it has no samples).
+     */
+    public static deleteContainer<ThrowOnError extends boolean = true>(options: Options<containersDeleteContainerData, ThrowOnError>) {
+        return (options.client ?? client).delete<containersDeleteContainerResponses, containersDeleteContainerErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/containers/{container_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Container
+     *
+     * Get a container by id.
+     */
+    public static readContainer<ThrowOnError extends boolean = true>(options: Options<containersReadContainerData, ThrowOnError>) {
+        return (options.client ?? client).get<containersReadContainerResponses, containersReadContainerErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/containers/{container_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Container
+     *
+     * Update a container.
+     */
+    public static updateContainer<ThrowOnError extends boolean = true>(options: Options<containersUpdateContainerData, ThrowOnError>) {
+        return (options.client ?? client).patch<containersUpdateContainerResponses, containersUpdateContainerErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/containers/{container_id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Read Container Samples
+     *
+     * Filling history of a container, newest first.
+     */
+    public static readContainerSamples<ThrowOnError extends boolean = true>(options: Options<containersReadContainerSamplesData, ThrowOnError>) {
+        return (options.client ?? client).get<containersReadContainerSamplesResponses, containersReadContainerSamplesErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/containers/{container_id}/samples',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Container Current Sample
+     *
+     * The sample currently in the container (the latest filling).
+     */
+    public static readContainerCurrentSample<ThrowOnError extends boolean = true>(options: Options<containersReadContainerCurrentSampleData, ThrowOnError>) {
+        return (options.client ?? client).get<containersReadContainerCurrentSampleResponses, containersReadContainerCurrentSampleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/containers/{container_id}/current-sample',
+            ...options
+        });
+    }
+}
+
+export class SamplesService {
+    /**
+     * Read Samples
+     *
+     * List samples, newest filling first, optionally filtered.
+     */
+    public static readSamples<ThrowOnError extends boolean = true>(options?: Options<samplesReadSamplesData, ThrowOnError>) {
+        return (options?.client ?? client).get<samplesReadSamplesResponses, samplesReadSamplesErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/samples/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Sample
+     *
+     * Record the filling of a container.
+     */
+    public static createSample<ThrowOnError extends boolean = true>(options: Options<samplesCreateSampleData, ThrowOnError>) {
+        return (options.client ?? client).post<samplesCreateSampleResponses, samplesCreateSampleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/samples/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Sample
+     *
+     * Delete a sample (only if it has no measurements).
+     */
+    public static deleteSample<ThrowOnError extends boolean = true>(options: Options<samplesDeleteSampleData, ThrowOnError>) {
+        return (options.client ?? client).delete<samplesDeleteSampleResponses, samplesDeleteSampleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/samples/{sample_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Sample
+     *
+     * Get a sample by id.
+     */
+    public static readSample<ThrowOnError extends boolean = true>(options: Options<samplesReadSampleData, ThrowOnError>) {
+        return (options.client ?? client).get<samplesReadSampleResponses, samplesReadSampleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/samples/{sample_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Sample
+     *
+     * Update a sample.
+     */
+    public static updateSample<ThrowOnError extends boolean = true>(options: Options<samplesUpdateSampleData, ThrowOnError>) {
+        return (options.client ?? client).patch<samplesUpdateSampleResponses, samplesUpdateSampleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/samples/{sample_id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class MeasurementsService {
+    /**
+     * Read Measurements
+     *
+     * List measurements (without results), newest first, optionally filtered.
+     */
+    public static readMeasurements<ThrowOnError extends boolean = true>(options?: Options<measurementsReadMeasurementsData, ThrowOnError>) {
+        return (options?.client ?? client).get<measurementsReadMeasurementsResponses, measurementsReadMeasurementsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/measurements/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Measurement
+     *
+     * Create a measurement, optionally with its per-compound results.
+     */
+    public static createMeasurement<ThrowOnError extends boolean = true>(options: Options<measurementsCreateMeasurementData, ThrowOnError>) {
+        return (options.client ?? client).post<measurementsCreateMeasurementResponses, measurementsCreateMeasurementErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/measurements/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Measurement
+     *
+     * Delete a measurement and its results.
+     */
+    public static deleteMeasurement<ThrowOnError extends boolean = true>(options: Options<measurementsDeleteMeasurementData, ThrowOnError>) {
+        return (options.client ?? client).delete<measurementsDeleteMeasurementResponses, measurementsDeleteMeasurementErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/measurements/{measurement_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Measurement
+     *
+     * Get a measurement with its per-compound results.
+     */
+    public static readMeasurement<ThrowOnError extends boolean = true>(options: Options<measurementsReadMeasurementData, ThrowOnError>) {
+        return (options.client ?? client).get<measurementsReadMeasurementResponses, measurementsReadMeasurementErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/measurements/{measurement_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Measurement
+     *
+     * Update a measurement's fields (use PUT .../results for the results).
+     */
+    public static updateMeasurement<ThrowOnError extends boolean = true>(options: Options<measurementsUpdateMeasurementData, ThrowOnError>) {
+        return (options.client ?? client).patch<measurementsUpdateMeasurementResponses, measurementsUpdateMeasurementErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/measurements/{measurement_id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Import Measurements
+     *
+     * Bulk import, all or nothing.
+     *
+     * A measurement already in the database (same instrument and measured_at) is
+     * kept (`mode=skip`) or overwritten with its results (`mode=replace`).
+     */
+    public static importMeasurements<ThrowOnError extends boolean = true>(options: Options<measurementsImportMeasurementsData, ThrowOnError>) {
+        return (options.client ?? client).post<measurementsImportMeasurementsResponses, measurementsImportMeasurementsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/measurements/import',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Replace Measurement Results
+     *
+     * Replace all per-compound results of a measurement (e.g. after reprocessing).
+     */
+    public static replaceMeasurementResults<ThrowOnError extends boolean = true>(options: Options<measurementsReplaceMeasurementResultsData, ThrowOnError>) {
+        return (options.client ?? client).put<measurementsReplaceMeasurementResultsResponses, measurementsReplaceMeasurementResultsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/measurements/{measurement_id}/results',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class ResultsService {
+    /**
+     * Read Results
+     *
+     * One row per (measurement, compound), oldest first, optionally filtered.
+     */
+    public static readResults<ThrowOnError extends boolean = true>(options?: Options<resultsReadResultsData, ThrowOnError>) {
+        return (options?.client ?? client).get<resultsReadResultsResponses, resultsReadResultsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/results/',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Results Csv
+     *
+     * Same rows as GET /results, as a CSV download (no pagination).
+     */
+    public static readResultsCsv<ThrowOnError extends boolean = true>(options?: Options<resultsReadResultsCsvData, ThrowOnError>) {
+        return (options?.client ?? client).get<resultsReadResultsCsvResponses, resultsReadResultsCsvErrors, ThrowOnError>({
+            responseType: 'text',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/results/csv',
+            ...options
         });
     }
 }

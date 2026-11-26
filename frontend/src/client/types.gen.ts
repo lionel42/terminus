@@ -35,6 +35,158 @@ export type Body_login_login_access_token = {
 };
 
 /**
+ * CompoundCreate
+ */
+export type CompoundCreate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Formula
+     */
+    formula?: string | null;
+    /**
+     * Unit
+     */
+    unit?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
+ * CompoundPublic
+ */
+export type CompoundPublic = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Formula
+     */
+    formula?: string | null;
+    /**
+     * Unit
+     */
+    unit?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
+ * CompoundUpdate
+ */
+export type CompoundUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Formula
+     */
+    formula?: string | null;
+    /**
+     * Unit
+     */
+    unit?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * CompoundsPublic
+ */
+export type CompoundsPublic = {
+    /**
+     * Data
+     */
+    data: Array<CompoundPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * ContainerCreate
+ */
+export type ContainerCreate = {
+    /**
+     * Kind
+     */
+    kind?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
+ * ContainerPublic
+ */
+export type ContainerPublic = {
+    /**
+     * Kind
+     */
+    kind?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
+ * ContainerUpdate
+ */
+export type ContainerUpdate = {
+    /**
+     * Kind
+     */
+    kind?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * ContainersPublic
+ */
+export type ContainersPublic = {
+    /**
+     * Data
+     */
+    data: Array<ContainerPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
  * HTTPValidationError
  */
 export type HTTPValidationError = {
@@ -45,27 +197,18 @@ export type HTTPValidationError = {
 };
 
 /**
- * ItemCreate
+ * ImportMode
  */
-export type ItemCreate = {
-    /**
-     * Title
-     */
-    title: string;
-    /**
-     * Description
-     */
-    description?: string | null;
-};
+export type ImportMode = 'skip' | 'replace';
 
 /**
- * ItemPublic
+ * InstrumentCreate
  */
-export type ItemPublic = {
+export type InstrumentCreate = {
     /**
-     * Title
+     * Name
      */
-    title: string;
+    name?: string | null;
     /**
      * Description
      */
@@ -74,24 +217,34 @@ export type ItemPublic = {
      * Id
      */
     id: string;
-    /**
-     * Owner Id
-     */
-    owner_id: string;
-    /**
-     * Created At
-     */
-    created_at?: string | null;
 };
 
 /**
- * ItemUpdate
+ * InstrumentPublic
  */
-export type ItemUpdate = {
+export type InstrumentPublic = {
     /**
-     * Title
+     * Name
      */
-    title?: string | null;
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
+ * InstrumentUpdate
+ */
+export type InstrumentUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
     /**
      * Description
      */
@@ -99,13 +252,210 @@ export type ItemUpdate = {
 };
 
 /**
- * ItemsPublic
+ * InstrumentsPublic
  */
-export type ItemsPublic = {
+export type InstrumentsPublic = {
     /**
      * Data
      */
-    data: Array<ItemPublic>;
+    data: Array<InstrumentPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * MeasurementCreate
+ */
+export type MeasurementCreate = {
+    type: MeasurementType;
+    /**
+     * Measured At
+     */
+    measured_at: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Instrument Id
+     */
+    instrument_id: string;
+    /**
+     * Sample Id
+     */
+    sample_id?: string | null;
+    /**
+     * Results
+     */
+    results?: Array<MeasurementResultCreate>;
+};
+
+/**
+ * MeasurementImportReport
+ */
+export type MeasurementImportReport = {
+    /**
+     * Created
+     */
+    created: number;
+    /**
+     * Skipped
+     */
+    skipped: number;
+    /**
+     * Replaced
+     */
+    replaced: number;
+};
+
+/**
+ * MeasurementPublic
+ */
+export type MeasurementPublic = {
+    type: MeasurementType;
+    /**
+     * Measured At
+     */
+    measured_at: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Instrument Id
+     */
+    instrument_id: string;
+    /**
+     * Sample Id
+     */
+    sample_id: string | null;
+};
+
+/**
+ * MeasurementPublicWithResults
+ */
+export type MeasurementPublicWithResults = {
+    type: MeasurementType;
+    /**
+     * Measured At
+     */
+    measured_at: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Instrument Id
+     */
+    instrument_id: string;
+    /**
+     * Sample Id
+     */
+    sample_id: string | null;
+    /**
+     * Results
+     */
+    results?: Array<MeasurementResultPublic>;
+};
+
+/**
+ * MeasurementResultCreate
+ */
+export type MeasurementResultCreate = {
+    /**
+     * Area
+     */
+    area?: number | null;
+    /**
+     * Height
+     */
+    height?: number | null;
+    /**
+     * Retention Time
+     */
+    retention_time?: number | null;
+    /**
+     * Concentration
+     */
+    concentration?: number | null;
+    /**
+     * Compound Id
+     */
+    compound_id: string;
+};
+
+/**
+ * MeasurementResultPublic
+ */
+export type MeasurementResultPublic = {
+    /**
+     * Area
+     */
+    area?: number | null;
+    /**
+     * Height
+     */
+    height?: number | null;
+    /**
+     * Retention Time
+     */
+    retention_time?: number | null;
+    /**
+     * Concentration
+     */
+    concentration?: number | null;
+    /**
+     * Compound Id
+     */
+    compound_id: string;
+};
+
+/**
+ * MeasurementType
+ */
+export type MeasurementType = 'air' | 'blank' | 'tank' | 'standard' | 'labair' | 'test';
+
+/**
+ * MeasurementUpdate
+ */
+export type MeasurementUpdate = {
+    type?: MeasurementType | null;
+    /**
+     * Instrument Id
+     */
+    instrument_id?: string | null;
+    /**
+     * Sample Id
+     */
+    sample_id?: string | null;
+    /**
+     * Measured At
+     */
+    measured_at?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * MeasurementsPublic
+ */
+export type MeasurementsPublic = {
+    /**
+     * Data
+     */
+    data: Array<MeasurementPublic>;
     /**
      * Count
      */
@@ -156,6 +506,143 @@ export type PrivateUserCreate = {
      * Is Verified
      */
     is_verified?: boolean;
+};
+
+/**
+ * ResultRow
+ */
+export type ResultRow = {
+    /**
+     * Measurement Id
+     */
+    measurement_id: number;
+    /**
+     * Measured At
+     */
+    measured_at: string;
+    type: MeasurementType;
+    /**
+     * Instrument Id
+     */
+    instrument_id: string;
+    /**
+     * Sample Id
+     */
+    sample_id: string | null;
+    /**
+     * Container Id
+     */
+    container_id: string | null;
+    /**
+     * Compound Id
+     */
+    compound_id: string;
+    /**
+     * Area
+     */
+    area: number | null;
+    /**
+     * Height
+     */
+    height: number | null;
+    /**
+     * Retention Time
+     */
+    retention_time: number | null;
+    /**
+     * Concentration
+     */
+    concentration: number | null;
+};
+
+/**
+ * ResultRowsPublic
+ */
+export type ResultRowsPublic = {
+    /**
+     * Data
+     */
+    data: Array<ResultRow>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * SampleCreate
+ */
+export type SampleCreate = {
+    /**
+     * Filled At
+     */
+    filled_at: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Container Id
+     */
+    container_id: string;
+};
+
+/**
+ * SamplePublic
+ */
+export type SamplePublic = {
+    /**
+     * Filled At
+     */
+    filled_at: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Container Id
+     */
+    container_id: string;
+};
+
+/**
+ * SampleUpdate
+ */
+export type SampleUpdate = {
+    /**
+     * Container Id
+     */
+    container_id?: string | null;
+    /**
+     * Filled At
+     */
+    filled_at?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * SamplesPublic
+ */
+export type SamplesPublic = {
+    /**
+     * Data
+     */
+    data: Array<SamplePublic>;
+    /**
+     * Count
+     */
+    count: number;
 };
 
 /**
@@ -772,7 +1259,7 @@ export type utilsHealthCheckResponses = {
 
 export type utilsHealthCheckResponse = utilsHealthCheckResponses[keyof utilsHealthCheckResponses];
 
-export type itemsReadItemsData = {
+export type compoundsReadCompoundsData = {
     body?: never;
     path?: never;
     query?: {
@@ -785,141 +1272,1019 @@ export type itemsReadItemsData = {
          */
         limit?: number;
     };
-    url: '/api/v1/items/';
+    url: '/api/v1/compounds/';
 };
 
-export type itemsReadItemsErrors = {
+export type compoundsReadCompoundsErrors = {
     /**
      * Validation Error
      */
     422: HTTPValidationError;
 };
 
-export type itemsReadItemsError = itemsReadItemsErrors[keyof itemsReadItemsErrors];
+export type compoundsReadCompoundsError = compoundsReadCompoundsErrors[keyof compoundsReadCompoundsErrors];
 
-export type itemsReadItemsResponses = {
+export type compoundsReadCompoundsResponses = {
     /**
      * Successful Response
      */
-    200: ItemsPublic;
+    200: CompoundsPublic;
 };
 
-export type itemsReadItemsResponse = itemsReadItemsResponses[keyof itemsReadItemsResponses];
+export type compoundsReadCompoundsResponse = compoundsReadCompoundsResponses[keyof compoundsReadCompoundsResponses];
 
-export type itemsCreateItemData = {
-    body: ItemCreate;
+export type compoundsCreateCompoundData = {
+    body: CompoundCreate;
     path?: never;
     query?: never;
-    url: '/api/v1/items/';
+    url: '/api/v1/compounds/';
 };
 
-export type itemsCreateItemErrors = {
+export type compoundsCreateCompoundErrors = {
     /**
      * Validation Error
      */
     422: HTTPValidationError;
 };
 
-export type itemsCreateItemError = itemsCreateItemErrors[keyof itemsCreateItemErrors];
+export type compoundsCreateCompoundError = compoundsCreateCompoundErrors[keyof compoundsCreateCompoundErrors];
 
-export type itemsCreateItemResponses = {
+export type compoundsCreateCompoundResponses = {
     /**
      * Successful Response
      */
-    200: ItemPublic;
+    200: CompoundPublic;
 };
 
-export type itemsCreateItemResponse = itemsCreateItemResponses[keyof itemsCreateItemResponses];
+export type compoundsCreateCompoundResponse = compoundsCreateCompoundResponses[keyof compoundsCreateCompoundResponses];
 
-export type itemsDeleteItemData = {
+export type compoundsDeleteCompoundData = {
     body?: never;
     path: {
         /**
-         * Id
+         * Compound Id
          */
-        id: string;
+        compound_id: string;
     };
     query?: never;
-    url: '/api/v1/items/{id}';
+    url: '/api/v1/compounds/{compound_id}';
 };
 
-export type itemsDeleteItemErrors = {
+export type compoundsDeleteCompoundErrors = {
     /**
      * Validation Error
      */
     422: HTTPValidationError;
 };
 
-export type itemsDeleteItemError = itemsDeleteItemErrors[keyof itemsDeleteItemErrors];
+export type compoundsDeleteCompoundError = compoundsDeleteCompoundErrors[keyof compoundsDeleteCompoundErrors];
 
-export type itemsDeleteItemResponses = {
+export type compoundsDeleteCompoundResponses = {
     /**
      * Successful Response
      */
     200: Message;
 };
 
-export type itemsDeleteItemResponse = itemsDeleteItemResponses[keyof itemsDeleteItemResponses];
+export type compoundsDeleteCompoundResponse = compoundsDeleteCompoundResponses[keyof compoundsDeleteCompoundResponses];
 
-export type itemsReadItemData = {
+export type compoundsReadCompoundData = {
     body?: never;
     path: {
         /**
-         * Id
+         * Compound Id
          */
-        id: string;
+        compound_id: string;
     };
     query?: never;
-    url: '/api/v1/items/{id}';
+    url: '/api/v1/compounds/{compound_id}';
 };
 
-export type itemsReadItemErrors = {
+export type compoundsReadCompoundErrors = {
     /**
      * Validation Error
      */
     422: HTTPValidationError;
 };
 
-export type itemsReadItemError = itemsReadItemErrors[keyof itemsReadItemErrors];
+export type compoundsReadCompoundError = compoundsReadCompoundErrors[keyof compoundsReadCompoundErrors];
 
-export type itemsReadItemResponses = {
+export type compoundsReadCompoundResponses = {
     /**
      * Successful Response
      */
-    200: ItemPublic;
+    200: CompoundPublic;
 };
 
-export type itemsReadItemResponse = itemsReadItemResponses[keyof itemsReadItemResponses];
+export type compoundsReadCompoundResponse = compoundsReadCompoundResponses[keyof compoundsReadCompoundResponses];
 
-export type itemsUpdateItemData = {
-    body: ItemUpdate;
+export type compoundsUpdateCompoundData = {
+    body: CompoundUpdate;
     path: {
         /**
-         * Id
+         * Compound Id
          */
-        id: string;
+        compound_id: string;
     };
     query?: never;
-    url: '/api/v1/items/{id}';
+    url: '/api/v1/compounds/{compound_id}';
 };
 
-export type itemsUpdateItemErrors = {
+export type compoundsUpdateCompoundErrors = {
     /**
      * Validation Error
      */
     422: HTTPValidationError;
 };
 
-export type itemsUpdateItemError = itemsUpdateItemErrors[keyof itemsUpdateItemErrors];
+export type compoundsUpdateCompoundError = compoundsUpdateCompoundErrors[keyof compoundsUpdateCompoundErrors];
 
-export type itemsUpdateItemResponses = {
+export type compoundsUpdateCompoundResponses = {
     /**
      * Successful Response
      */
-    200: ItemPublic;
+    200: CompoundPublic;
 };
 
-export type itemsUpdateItemResponse = itemsUpdateItemResponses[keyof itemsUpdateItemResponses];
+export type compoundsUpdateCompoundResponse = compoundsUpdateCompoundResponses[keyof compoundsUpdateCompoundResponses];
+
+export type instrumentsReadInstrumentsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/instruments/';
+};
+
+export type instrumentsReadInstrumentsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type instrumentsReadInstrumentsError = instrumentsReadInstrumentsErrors[keyof instrumentsReadInstrumentsErrors];
+
+export type instrumentsReadInstrumentsResponses = {
+    /**
+     * Successful Response
+     */
+    200: InstrumentsPublic;
+};
+
+export type instrumentsReadInstrumentsResponse = instrumentsReadInstrumentsResponses[keyof instrumentsReadInstrumentsResponses];
+
+export type instrumentsCreateInstrumentData = {
+    body: InstrumentCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/instruments/';
+};
+
+export type instrumentsCreateInstrumentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type instrumentsCreateInstrumentError = instrumentsCreateInstrumentErrors[keyof instrumentsCreateInstrumentErrors];
+
+export type instrumentsCreateInstrumentResponses = {
+    /**
+     * Successful Response
+     */
+    200: InstrumentPublic;
+};
+
+export type instrumentsCreateInstrumentResponse = instrumentsCreateInstrumentResponses[keyof instrumentsCreateInstrumentResponses];
+
+export type instrumentsDeleteInstrumentData = {
+    body?: never;
+    path: {
+        /**
+         * Instrument Id
+         */
+        instrument_id: string;
+    };
+    query?: never;
+    url: '/api/v1/instruments/{instrument_id}';
+};
+
+export type instrumentsDeleteInstrumentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type instrumentsDeleteInstrumentError = instrumentsDeleteInstrumentErrors[keyof instrumentsDeleteInstrumentErrors];
+
+export type instrumentsDeleteInstrumentResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type instrumentsDeleteInstrumentResponse = instrumentsDeleteInstrumentResponses[keyof instrumentsDeleteInstrumentResponses];
+
+export type instrumentsReadInstrumentData = {
+    body?: never;
+    path: {
+        /**
+         * Instrument Id
+         */
+        instrument_id: string;
+    };
+    query?: never;
+    url: '/api/v1/instruments/{instrument_id}';
+};
+
+export type instrumentsReadInstrumentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type instrumentsReadInstrumentError = instrumentsReadInstrumentErrors[keyof instrumentsReadInstrumentErrors];
+
+export type instrumentsReadInstrumentResponses = {
+    /**
+     * Successful Response
+     */
+    200: InstrumentPublic;
+};
+
+export type instrumentsReadInstrumentResponse = instrumentsReadInstrumentResponses[keyof instrumentsReadInstrumentResponses];
+
+export type instrumentsUpdateInstrumentData = {
+    body: InstrumentUpdate;
+    path: {
+        /**
+         * Instrument Id
+         */
+        instrument_id: string;
+    };
+    query?: never;
+    url: '/api/v1/instruments/{instrument_id}';
+};
+
+export type instrumentsUpdateInstrumentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type instrumentsUpdateInstrumentError = instrumentsUpdateInstrumentErrors[keyof instrumentsUpdateInstrumentErrors];
+
+export type instrumentsUpdateInstrumentResponses = {
+    /**
+     * Successful Response
+     */
+    200: InstrumentPublic;
+};
+
+export type instrumentsUpdateInstrumentResponse = instrumentsUpdateInstrumentResponses[keyof instrumentsUpdateInstrumentResponses];
+
+export type containersReadContainersData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/containers/';
+};
+
+export type containersReadContainersErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type containersReadContainersError = containersReadContainersErrors[keyof containersReadContainersErrors];
+
+export type containersReadContainersResponses = {
+    /**
+     * Successful Response
+     */
+    200: ContainersPublic;
+};
+
+export type containersReadContainersResponse = containersReadContainersResponses[keyof containersReadContainersResponses];
+
+export type containersCreateContainerData = {
+    body: ContainerCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/containers/';
+};
+
+export type containersCreateContainerErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type containersCreateContainerError = containersCreateContainerErrors[keyof containersCreateContainerErrors];
+
+export type containersCreateContainerResponses = {
+    /**
+     * Successful Response
+     */
+    200: ContainerPublic;
+};
+
+export type containersCreateContainerResponse = containersCreateContainerResponses[keyof containersCreateContainerResponses];
+
+export type containersDeleteContainerData = {
+    body?: never;
+    path: {
+        /**
+         * Container Id
+         */
+        container_id: string;
+    };
+    query?: never;
+    url: '/api/v1/containers/{container_id}';
+};
+
+export type containersDeleteContainerErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type containersDeleteContainerError = containersDeleteContainerErrors[keyof containersDeleteContainerErrors];
+
+export type containersDeleteContainerResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type containersDeleteContainerResponse = containersDeleteContainerResponses[keyof containersDeleteContainerResponses];
+
+export type containersReadContainerData = {
+    body?: never;
+    path: {
+        /**
+         * Container Id
+         */
+        container_id: string;
+    };
+    query?: never;
+    url: '/api/v1/containers/{container_id}';
+};
+
+export type containersReadContainerErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type containersReadContainerError = containersReadContainerErrors[keyof containersReadContainerErrors];
+
+export type containersReadContainerResponses = {
+    /**
+     * Successful Response
+     */
+    200: ContainerPublic;
+};
+
+export type containersReadContainerResponse = containersReadContainerResponses[keyof containersReadContainerResponses];
+
+export type containersUpdateContainerData = {
+    body: ContainerUpdate;
+    path: {
+        /**
+         * Container Id
+         */
+        container_id: string;
+    };
+    query?: never;
+    url: '/api/v1/containers/{container_id}';
+};
+
+export type containersUpdateContainerErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type containersUpdateContainerError = containersUpdateContainerErrors[keyof containersUpdateContainerErrors];
+
+export type containersUpdateContainerResponses = {
+    /**
+     * Successful Response
+     */
+    200: ContainerPublic;
+};
+
+export type containersUpdateContainerResponse = containersUpdateContainerResponses[keyof containersUpdateContainerResponses];
+
+export type containersReadContainerSamplesData = {
+    body?: never;
+    path: {
+        /**
+         * Container Id
+         */
+        container_id: string;
+    };
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/containers/{container_id}/samples';
+};
+
+export type containersReadContainerSamplesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type containersReadContainerSamplesError = containersReadContainerSamplesErrors[keyof containersReadContainerSamplesErrors];
+
+export type containersReadContainerSamplesResponses = {
+    /**
+     * Successful Response
+     */
+    200: SamplesPublic;
+};
+
+export type containersReadContainerSamplesResponse = containersReadContainerSamplesResponses[keyof containersReadContainerSamplesResponses];
+
+export type containersReadContainerCurrentSampleData = {
+    body?: never;
+    path: {
+        /**
+         * Container Id
+         */
+        container_id: string;
+    };
+    query?: never;
+    url: '/api/v1/containers/{container_id}/current-sample';
+};
+
+export type containersReadContainerCurrentSampleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type containersReadContainerCurrentSampleError = containersReadContainerCurrentSampleErrors[keyof containersReadContainerCurrentSampleErrors];
+
+export type containersReadContainerCurrentSampleResponses = {
+    /**
+     * Successful Response
+     */
+    200: SamplePublic;
+};
+
+export type containersReadContainerCurrentSampleResponse = containersReadContainerCurrentSampleResponses[keyof containersReadContainerCurrentSampleResponses];
+
+export type samplesReadSamplesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Container Id
+         */
+        container_id?: string | null;
+        /**
+         * Filled From
+         */
+        filled_from?: string | null;
+        /**
+         * Filled To
+         */
+        filled_to?: string | null;
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/samples/';
+};
+
+export type samplesReadSamplesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type samplesReadSamplesError = samplesReadSamplesErrors[keyof samplesReadSamplesErrors];
+
+export type samplesReadSamplesResponses = {
+    /**
+     * Successful Response
+     */
+    200: SamplesPublic;
+};
+
+export type samplesReadSamplesResponse = samplesReadSamplesResponses[keyof samplesReadSamplesResponses];
+
+export type samplesCreateSampleData = {
+    body: SampleCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/samples/';
+};
+
+export type samplesCreateSampleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type samplesCreateSampleError = samplesCreateSampleErrors[keyof samplesCreateSampleErrors];
+
+export type samplesCreateSampleResponses = {
+    /**
+     * Successful Response
+     */
+    200: SamplePublic;
+};
+
+export type samplesCreateSampleResponse = samplesCreateSampleResponses[keyof samplesCreateSampleResponses];
+
+export type samplesDeleteSampleData = {
+    body?: never;
+    path: {
+        /**
+         * Sample Id
+         */
+        sample_id: string;
+    };
+    query?: never;
+    url: '/api/v1/samples/{sample_id}';
+};
+
+export type samplesDeleteSampleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type samplesDeleteSampleError = samplesDeleteSampleErrors[keyof samplesDeleteSampleErrors];
+
+export type samplesDeleteSampleResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type samplesDeleteSampleResponse = samplesDeleteSampleResponses[keyof samplesDeleteSampleResponses];
+
+export type samplesReadSampleData = {
+    body?: never;
+    path: {
+        /**
+         * Sample Id
+         */
+        sample_id: string;
+    };
+    query?: never;
+    url: '/api/v1/samples/{sample_id}';
+};
+
+export type samplesReadSampleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type samplesReadSampleError = samplesReadSampleErrors[keyof samplesReadSampleErrors];
+
+export type samplesReadSampleResponses = {
+    /**
+     * Successful Response
+     */
+    200: SamplePublic;
+};
+
+export type samplesReadSampleResponse = samplesReadSampleResponses[keyof samplesReadSampleResponses];
+
+export type samplesUpdateSampleData = {
+    body: SampleUpdate;
+    path: {
+        /**
+         * Sample Id
+         */
+        sample_id: string;
+    };
+    query?: never;
+    url: '/api/v1/samples/{sample_id}';
+};
+
+export type samplesUpdateSampleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type samplesUpdateSampleError = samplesUpdateSampleErrors[keyof samplesUpdateSampleErrors];
+
+export type samplesUpdateSampleResponses = {
+    /**
+     * Successful Response
+     */
+    200: SamplePublic;
+};
+
+export type samplesUpdateSampleResponse = samplesUpdateSampleResponses[keyof samplesUpdateSampleResponses];
+
+export type measurementsReadMeasurementsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Instrument Id
+         */
+        instrument_id?: string | null;
+        /**
+         * Type
+         */
+        type?: MeasurementType | null;
+        /**
+         * Sample Id
+         */
+        sample_id?: string | null;
+        /**
+         * Container Id
+         */
+        container_id?: string | null;
+        /**
+         * Measured From
+         */
+        measured_from?: string | null;
+        /**
+         * Measured To
+         */
+        measured_to?: string | null;
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/measurements/';
+};
+
+export type measurementsReadMeasurementsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsReadMeasurementsError = measurementsReadMeasurementsErrors[keyof measurementsReadMeasurementsErrors];
+
+export type measurementsReadMeasurementsResponses = {
+    /**
+     * Successful Response
+     */
+    200: MeasurementsPublic;
+};
+
+export type measurementsReadMeasurementsResponse = measurementsReadMeasurementsResponses[keyof measurementsReadMeasurementsResponses];
+
+export type measurementsCreateMeasurementData = {
+    body: MeasurementCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/measurements/';
+};
+
+export type measurementsCreateMeasurementErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsCreateMeasurementError = measurementsCreateMeasurementErrors[keyof measurementsCreateMeasurementErrors];
+
+export type measurementsCreateMeasurementResponses = {
+    /**
+     * Successful Response
+     */
+    200: MeasurementPublicWithResults;
+};
+
+export type measurementsCreateMeasurementResponse = measurementsCreateMeasurementResponses[keyof measurementsCreateMeasurementResponses];
+
+export type measurementsDeleteMeasurementData = {
+    body?: never;
+    path: {
+        /**
+         * Measurement Id
+         */
+        measurement_id: number;
+    };
+    query?: never;
+    url: '/api/v1/measurements/{measurement_id}';
+};
+
+export type measurementsDeleteMeasurementErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsDeleteMeasurementError = measurementsDeleteMeasurementErrors[keyof measurementsDeleteMeasurementErrors];
+
+export type measurementsDeleteMeasurementResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type measurementsDeleteMeasurementResponse = measurementsDeleteMeasurementResponses[keyof measurementsDeleteMeasurementResponses];
+
+export type measurementsReadMeasurementData = {
+    body?: never;
+    path: {
+        /**
+         * Measurement Id
+         */
+        measurement_id: number;
+    };
+    query?: never;
+    url: '/api/v1/measurements/{measurement_id}';
+};
+
+export type measurementsReadMeasurementErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsReadMeasurementError = measurementsReadMeasurementErrors[keyof measurementsReadMeasurementErrors];
+
+export type measurementsReadMeasurementResponses = {
+    /**
+     * Successful Response
+     */
+    200: MeasurementPublicWithResults;
+};
+
+export type measurementsReadMeasurementResponse = measurementsReadMeasurementResponses[keyof measurementsReadMeasurementResponses];
+
+export type measurementsUpdateMeasurementData = {
+    body: MeasurementUpdate;
+    path: {
+        /**
+         * Measurement Id
+         */
+        measurement_id: number;
+    };
+    query?: never;
+    url: '/api/v1/measurements/{measurement_id}';
+};
+
+export type measurementsUpdateMeasurementErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsUpdateMeasurementError = measurementsUpdateMeasurementErrors[keyof measurementsUpdateMeasurementErrors];
+
+export type measurementsUpdateMeasurementResponses = {
+    /**
+     * Successful Response
+     */
+    200: MeasurementPublicWithResults;
+};
+
+export type measurementsUpdateMeasurementResponse = measurementsUpdateMeasurementResponses[keyof measurementsUpdateMeasurementResponses];
+
+export type measurementsImportMeasurementsData = {
+    /**
+     * Measurements In
+     */
+    body: Array<MeasurementCreate>;
+    path?: never;
+    query?: {
+        mode?: ImportMode;
+    };
+    url: '/api/v1/measurements/import';
+};
+
+export type measurementsImportMeasurementsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsImportMeasurementsError = measurementsImportMeasurementsErrors[keyof measurementsImportMeasurementsErrors];
+
+export type measurementsImportMeasurementsResponses = {
+    /**
+     * Successful Response
+     */
+    200: MeasurementImportReport;
+};
+
+export type measurementsImportMeasurementsResponse = measurementsImportMeasurementsResponses[keyof measurementsImportMeasurementsResponses];
+
+export type measurementsReplaceMeasurementResultsData = {
+    /**
+     * Results In
+     */
+    body: Array<MeasurementResultCreate>;
+    path: {
+        /**
+         * Measurement Id
+         */
+        measurement_id: number;
+    };
+    query?: never;
+    url: '/api/v1/measurements/{measurement_id}/results';
+};
+
+export type measurementsReplaceMeasurementResultsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsReplaceMeasurementResultsError = measurementsReplaceMeasurementResultsErrors[keyof measurementsReplaceMeasurementResultsErrors];
+
+export type measurementsReplaceMeasurementResultsResponses = {
+    /**
+     * Successful Response
+     */
+    200: MeasurementPublicWithResults;
+};
+
+export type measurementsReplaceMeasurementResultsResponse = measurementsReplaceMeasurementResultsResponses[keyof measurementsReplaceMeasurementResultsResponses];
+
+export type resultsReadResultsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Instrument Id
+         */
+        instrument_id?: string | null;
+        /**
+         * Type
+         */
+        type?: MeasurementType | null;
+        /**
+         * Sample Id
+         */
+        sample_id?: string | null;
+        /**
+         * Container Id
+         */
+        container_id?: string | null;
+        /**
+         * Measured From
+         */
+        measured_from?: string | null;
+        /**
+         * Measured To
+         */
+        measured_to?: string | null;
+        /**
+         * Compound Id
+         */
+        compound_id?: string | null;
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/results/';
+};
+
+export type resultsReadResultsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type resultsReadResultsError = resultsReadResultsErrors[keyof resultsReadResultsErrors];
+
+export type resultsReadResultsResponses = {
+    /**
+     * Successful Response
+     */
+    200: ResultRowsPublic;
+};
+
+export type resultsReadResultsResponse = resultsReadResultsResponses[keyof resultsReadResultsResponses];
+
+export type resultsReadResultsCsvData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Instrument Id
+         */
+        instrument_id?: string | null;
+        /**
+         * Type
+         */
+        type?: MeasurementType | null;
+        /**
+         * Sample Id
+         */
+        sample_id?: string | null;
+        /**
+         * Container Id
+         */
+        container_id?: string | null;
+        /**
+         * Measured From
+         */
+        measured_from?: string | null;
+        /**
+         * Measured To
+         */
+        measured_to?: string | null;
+        /**
+         * Compound Id
+         */
+        compound_id?: string | null;
+    };
+    url: '/api/v1/results/csv';
+};
+
+export type resultsReadResultsCsvErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type resultsReadResultsCsvError = resultsReadResultsCsvErrors[keyof resultsReadResultsCsvErrors];
+
+export type resultsReadResultsCsvResponses = {
+    /**
+     * CSV file
+     */
+    200: unknown;
+};
 
 export type privateCreateUserData = {
     body: PrivateUserCreate;
