@@ -1,14 +1,15 @@
 from datetime import datetime
 from enum import StrEnum
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 import sqlalchemy as sa
-from pydantic import AwareDatetime, BaseModel
+from pydantic import AwareDatetime, BaseModel, field_validator
 from pydantic import Field as PydanticField
 from sqlalchemy import UniqueConstraint
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.models.common import LowerId, id_column
+from app.models.flags import check_flags
 
 if TYPE_CHECKING:
     from app.models.compound import Compound
@@ -21,6 +22,7 @@ class MeasurementType(StrEnum):
     BLANK = "blank"
     TANK = "tank"
     STANDARD = "standard"
+    TERT = "tert"  # tertiary standard
     LABAIR = "labair"
     TEST = "test"
 
@@ -36,14 +38,39 @@ MEASUREMENT_TYPE_SA = sa.Enum(
 )
 
 
+# --- Quality flags (bit masks of app.models.flags.QualityFlag) ---
+
+
+def flags_field() -> Any:
+    return Field(default=0, ge=0, sa_column_kwargs={"server_default": "0"})
+
+
+def flag_comment_field() -> Any:
+    return Field(default=None, max_length=1024)
+
+
+class FlagsMixin(SQLModel):
+    @field_validator("flags", check_fields=False)
+    @classmethod
+    def _check_flags(cls, value: int | None) -> int | None:
+        # Left out of an update, flags stay as they are; an explicit null
+        # would write NULL into a NOT NULL column: 0 clears them.
+        if value is None:
+            raise ValueError("flags cannot be null (0: no flag)")
+        return check_flags(value)
+
+
 # --- Per-compound results of a measurement (one chromatogram peak) ---
 
 
-class MeasurementResultBase(SQLModel):
+class MeasurementResultBase(FlagsMixin):
     area: float | None = None
     height: float | None = None
     retention_time: float | None = None
     concentration: float | None = None
+    # Flags of this compound only; those of the whole run are on the measurement
+    flags: int = flags_field()
+    flag_comment: str | None = flag_comment_field()
 
 
 class MeasurementResult(MeasurementResultBase, table=True):
@@ -65,13 +92,21 @@ class MeasurementResultPublic(MeasurementResultBase):
     compound_id: str
 
 
+class MeasurementResultFlagsUpdate(FlagsMixin):
+    flags: int | None = PydanticField(default=None, ge=0)
+    flag_comment: str | None = PydanticField(default=None, max_length=1024)
+
+
 # --- Measurement: one chromatography run on an instrument ---
 
 
-class MeasurementBase(SQLModel):
+class MeasurementBase(FlagsMixin):
     type: MeasurementType = Field(sa_type=MEASUREMENT_TYPE_SA, index=True)
     measured_at: AwareDatetime = Field(index=True)
     description: str | None = Field(default=None, max_length=1024)
+    # Flags of the whole run: they apply to all its results
+    flags: int = flags_field()
+    flag_comment: str | None = flag_comment_field()
 
 
 class Measurement(MeasurementBase, table=True):
@@ -103,12 +138,14 @@ class MeasurementCreate(MeasurementBase):
     results: list[MeasurementResultCreate] = []
 
 
-class MeasurementUpdate(SQLModel):
+class MeasurementUpdate(FlagsMixin):
     type: MeasurementType | None = None
     instrument_id: LowerId | None = None
     sample_id: LowerId | None = None
     measured_at: AwareDatetime | None = None
     description: str | None = Field(default=None, max_length=1024)
+    flags: int | None = Field(default=None, ge=0)
+    flag_comment: str | None = Field(default=None, max_length=1024)
 
 
 class MeasurementPublic(MeasurementBase):
@@ -136,6 +173,14 @@ class MeasurementFilters(BaseModel):
     container_id: LowerId | None = None
     measured_from: AwareDatetime | None = None
     measured_to: AwareDatetime | None = None
+    # Leave out what has any of these flag bits (e.g. 3: INVALID or
+    # AUTO_REJECTED), on the measurement or, for results, on the result
+    exclude_flags: int | None = PydanticField(default=None, ge=1)
+
+    @field_validator("exclude_flags")
+    @classmethod
+    def _check_exclude_flags(cls, value: int | None) -> int | None:
+        return None if value is None else check_flags(value)
 
 
 class ResultFilters(MeasurementFilters):
@@ -183,6 +228,10 @@ class ResultRow(SQLModel):
     height: float | None
     retention_time: float | None
     concentration: float | None
+    flags: int
+    flag_comment: str | None
+    measurement_flags: int
+    measurement_flag_comment: str | None
 
 
 class ResultRowsPublic(SQLModel):

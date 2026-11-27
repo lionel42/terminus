@@ -30,6 +30,10 @@ def _conditions(filters: ResultFilters) -> list[Any]:
     conditions: list[Any] = measurement_conditions(filters)
     if filters.compound_id is not None:
         conditions.append(col(MeasurementResult.compound_id) == filters.compound_id)
+    if filters.exclude_flags is not None:
+        conditions.append(
+            col(MeasurementResult.flags).op("&")(filters.exclude_flags) == 0
+        )
     return conditions
 
 
@@ -65,6 +69,10 @@ def _query_rows(
                 height=result.height,
                 retention_time=result.retention_time,
                 concentration=result.concentration,
+                flags=result.flags,
+                flag_comment=result.flag_comment,
+                measurement_flags=measurement.flags,
+                measurement_flag_comment=measurement.flag_comment,
             )
         )
     return rows

@@ -4,6 +4,7 @@ import { Download } from "lucide-react"
 
 import { type ResultRow, ResultsService } from "@/client"
 import { type Column, ServerTable } from "@/components/Common/ServerTable"
+import { FlagBadges } from "@/components/Domain/FlagBadges"
 import {
   MeasurementFilterBar,
   measurementSearchSchema,
@@ -74,6 +75,18 @@ const columns: Column<ResultRow>[] = [
   num("height", "Height"),
   num("retention_time", "Ret. time"),
   num("concentration", "Concentration"),
+  {
+    key: "flags",
+    header: "Flags",
+    cell: (r) => (
+      <FlagBadges
+        flags={r.flags}
+        comment={r.flag_comment}
+        runFlags={r.measurement_flags}
+        runComment={r.measurement_flag_comment}
+      />
+    ),
+  },
 ]
 
 function Results() {

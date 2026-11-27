@@ -4,6 +4,7 @@ import { z } from "zod"
 
 import { CompoundsService, InstrumentsService } from "@/client"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -13,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { UNUSABLE_FLAGS } from "@/lib/flags"
 import {
   compact,
   dayEndUtc,
@@ -30,6 +32,8 @@ export const measurementSearchSchema = z.object({
   /** YYYY-MM-DD, UTC days, inclusive */
   from: z.string().optional(),
   to: z.string().optional(),
+  /** Leave out what is flagged unusable */
+  usable: z.boolean().optional(),
   page: z.number().int().min(1).optional(),
 })
 
@@ -45,6 +49,7 @@ export function toApiFilters(search: MeasurementSearch) {
     compound_id: search.compound_id,
     measured_from: search.from ? dayStartUtc(search.from) : undefined,
     measured_to: search.to ? dayEndUtc(search.to) : undefined,
+    exclude_flags: search.usable ? UNUSABLE_FLAGS : undefined,
   })
 }
 
@@ -189,13 +194,25 @@ export function MeasurementFilterBar({
           onChange={(e) => set("to", e.target.value)}
         />
       </div>
-      <div className="col-span-2 flex items-end gap-2 md:col-span-4 xl:col-span-1">
-        <Button type="submit" className="flex-1">
-          Apply
-        </Button>
-        <Button type="button" variant="outline" onClick={() => onApply({})}>
-          Reset
-        </Button>
+      <div className="col-span-2 flex flex-col justify-end gap-2 md:col-span-4 xl:col-span-1">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="filter-usable"
+            checked={!!draft.usable}
+            onCheckedChange={(checked) =>
+              setDraft((d) => ({ ...d, usable: checked === true || undefined }))
+            }
+          />
+          <Label htmlFor="filter-usable">Hide unusable</Label>
+        </div>
+        <div className="flex gap-2">
+          <Button type="submit" className="flex-1">
+            Apply
+          </Button>
+          <Button type="button" variant="outline" onClick={() => onApply({})}>
+            Reset
+          </Button>
+        </div>
       </div>
     </form>
   )

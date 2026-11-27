@@ -64,20 +64,21 @@ def read_compounds(
     if status is not None:
         conditions.append(Compound.status == status)
     if q and q.strip():
-        pattern = f"%{q.strip()}%"
+        # autoescape: "_" and "%" (allowed in ids) match themselves
+        text = q.strip()
         alias_match = (
             select(CompoundAlias.id)
             .where(CompoundAlias.compound_id == Compound.id)
-            .where(col(CompoundAlias.alias).ilike(pattern))
+            .where(col(CompoundAlias.alias).icontains(text, autoescape=True))
             .exists()
         )
         conditions.append(
             or_(
-                col(Compound.id).ilike(pattern.lower()),
-                col(Compound.industrial_name).ilike(pattern),
-                col(Compound.iupac_name).ilike(pattern),
-                col(Compound.formula).ilike(pattern),
-                col(Compound.cas_number).ilike(pattern),
+                col(Compound.id).icontains(text.lower(), autoescape=True),
+                col(Compound.industrial_name).icontains(text, autoescape=True),
+                col(Compound.iupac_name).icontains(text, autoescape=True),
+                col(Compound.formula).icontains(text, autoescape=True),
+                col(Compound.cas_number).icontains(text, autoescape=True),
                 alias_match,
             )
         )

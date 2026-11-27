@@ -9,9 +9,10 @@ from sqlalchemy.types import TypeDecorator
 from sqlmodel import Field, SQLModel
 
 # Ids of domain objects (compounds, containers, samples, ...) are user-chosen
-# alphanumeric strings, always stored lower case.
+# strings of letters, digits, "-" and "_" (e.g. the GCwerks tank "e-223-d2"),
+# starting with a letter or digit, always stored lower case.
 ID_MAX_LENGTH = 64
-ID_PATTERN = r"^[a-z0-9]+$"
+ID_PATTERN = r"^[a-z0-9][a-z0-9_-]*$"
 # Ids are plain ASCII: 1 byte per char and fast binary comparisons in MySQL
 ID_COLLATION = "ascii_bin"
 

@@ -5,6 +5,7 @@ const VARIANTS: Record<MeasurementType, "default" | "secondary" | "outline"> = {
   air: "default",
   tank: "default",
   standard: "secondary",
+  tert: "secondary",
   blank: "outline",
   labair: "outline",
   test: "outline",

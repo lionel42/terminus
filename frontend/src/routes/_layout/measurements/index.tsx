@@ -11,6 +11,7 @@ import { ActionsMenu } from "@/components/Common/ActionsMenu"
 import { DeleteMenuItem } from "@/components/Common/DeleteMenuItem"
 import { EntityFormDialog } from "@/components/Common/EntityFormDialog"
 import { type Column, ServerTable } from "@/components/Common/ServerTable"
+import { FlagBadges } from "@/components/Domain/FlagBadges"
 import {
   MeasurementFilterBar,
   measurementSearchSchema,
@@ -89,6 +90,11 @@ function Measurements() {
         ) : (
           orDash(null)
         ),
+    },
+    {
+      key: "flags",
+      header: "Flags",
+      cell: (m) => <FlagBadges flags={m.flags ?? 0} comment={m.flag_comment} />,
     },
     {
       key: "description",

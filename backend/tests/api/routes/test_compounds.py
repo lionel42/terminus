@@ -251,3 +251,26 @@ def test_delete_used_compound_keeps_aliases(
     assert r.status_code == 409
     r = client.get(base, headers=superuser_token_headers)
     assert len(r.json()["aliases"]) == 1
+
+
+def test_search_underscore_is_literal(
+    client: TestClient, superuser_token_headers: dict[str, str]
+) -> None:
+    stem = random_id()
+    for compound_id in (f"{stem}_air", f"{stem}xair"):
+        r = client.post(
+            f"{API}/compounds/",
+            headers=superuser_token_headers,
+            json={"id": compound_id, "unit": "ppt"},
+        )
+        assert r.status_code == 200, r.text
+    r = client.get(
+        f"{API}/compounds/",
+        headers=superuser_token_headers,
+        params={"q": f"{stem}_air"},
+    )
+    assert [c["id"] for c in r.json()["data"]] == [f"{stem}_air"]
+    r = client.get(
+        f"{API}/compounds/", headers=superuser_token_headers, params={"q": f"{stem}%"}
+    )
+    assert r.json()["count"] == 0

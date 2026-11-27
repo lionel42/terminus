@@ -9,6 +9,7 @@ from app.api.deps import SessionDep, get_current_user
 from app.api.helpers import SUPERUSER_ONLY, get_or_404, require_exists
 from app.models import (
     Compound,
+    FlagInfo,
     ImportMode,
     Instrument,
     Measurement,
@@ -20,10 +21,13 @@ from app.models import (
     MeasurementQuery,
     MeasurementResult,
     MeasurementResultCreate,
+    MeasurementResultFlagsUpdate,
+    MeasurementResultPublic,
     MeasurementsPublic,
     MeasurementUpdate,
     Message,
     Sample,
+    flag_infos,
 )
 
 router = APIRouter(
@@ -54,6 +58,8 @@ def measurement_conditions(filters: MeasurementFilters) -> list[ColumnElement[bo
         conditions.append(col(Measurement.measured_at) >= filters.measured_from)
     if filters.measured_to is not None:
         conditions.append(col(Measurement.measured_at) <= filters.measured_to)
+    if filters.exclude_flags is not None:
+        conditions.append(col(Measurement.flags).op("&")(filters.exclude_flags) == 0)
     return conditions
 
 
@@ -115,6 +121,52 @@ def _replace_results(
         )
 
 
+FLAG_COMMENT_MAX_LENGTH = 1024
+
+
+def merge_flag_comments(existing: str | None, new: str | None) -> str | None:
+    """The parts ("; "-separated) of both comments, each once: re-importing
+    the same comment does not repeat it."""
+    parts = [
+        part.strip()
+        for comment in (existing, new)
+        if comment
+        for part in comment.split(";")
+    ]
+    text = "; ".join(dict.fromkeys(part for part in parts if part))
+    return text[:FLAG_COMMENT_MAX_LENGTH] or None
+
+
+def _merge_flags(
+    measurement_in: MeasurementCreate, existing: Measurement
+) -> MeasurementCreate:
+    """``measurement_in`` with the flags of ``existing`` kept (OR-ed) and their
+    comments joined: a re-import does not lose the flags set in terminus."""
+    old_results = {r.compound_id: r for r in existing.results}
+    results = []
+    for result in measurement_in.results:
+        old = old_results.get(result.compound_id)
+        if old is not None:
+            result = result.model_copy(
+                update={
+                    "flags": result.flags | old.flags,
+                    "flag_comment": merge_flag_comments(
+                        old.flag_comment, result.flag_comment
+                    ),
+                }
+            )
+        results.append(result)
+    return measurement_in.model_copy(
+        update={
+            "flags": measurement_in.flags | existing.flags,
+            "flag_comment": merge_flag_comments(
+                existing.flag_comment, measurement_in.flag_comment
+            ),
+            "results": results,
+        }
+    )
+
+
 def _with_results(session: Session, measurement: Measurement) -> Any:
     session.refresh(measurement)
     return MeasurementPublicWithResults.model_validate(measurement)
@@ -144,6 +196,12 @@ def read_measurements(
     return MeasurementsPublic(
         data=[MeasurementPublic.model_validate(m) for m in measurements], count=count
     )
+
+
+@router.get("/flags", response_model=list[FlagInfo])
+def read_flags() -> Any:
+    """The quality flag bits of `flags` (measurements and results)."""
+    return flag_infos()
 
 
 @router.get("/{measurement_id}", response_model=MeasurementPublicWithResults)
@@ -187,6 +245,9 @@ def import_measurements(
 
     A measurement already in the database (same instrument and measured_at) is
     kept (`mode=skip`) or overwritten with its results (`mode=replace`).
+    On replace, the flags already in terminus are kept: the imported flags are
+    added to them (OR) and the comments joined, so a re-import never clears a
+    flag; clear it with PATCH.
     """
     missing = {
         "instruments": _missing_ids(
@@ -229,6 +290,7 @@ def import_measurements(
             report.skipped += 1
             continue
         if existing is not None:
+            measurement_in = _merge_flags(measurement_in, existing)
             existing.sqlmodel_update(measurement_in.model_dump(exclude={"results"}))
             session.add(existing)
             measurement = existing
@@ -286,6 +348,28 @@ def replace_measurement_results(
     session.commit()
     session.expire(measurement, ["results"])
     return _with_results(session, measurement)
+
+
+@router.patch(
+    "/{measurement_id}/results/{compound_id}",
+    dependencies=SUPERUSER_ONLY,
+    response_model=MeasurementResultPublic,
+)
+def update_result_flags(
+    session: SessionDep,
+    measurement_id: int,
+    compound_id: str,
+    flags_in: MeasurementResultFlagsUpdate,
+) -> Any:
+    """Set the flags of one compound of a measurement."""
+    result = session.get(MeasurementResult, (measurement_id, compound_id.lower()))
+    if result is None:
+        raise HTTPException(status_code=404, detail="Result not found")
+    result.sqlmodel_update(flags_in.model_dump(exclude_unset=True))
+    session.add(result)
+    session.commit()
+    session.refresh(result)
+    return result
 
 
 @router.delete("/{measurement_id}", dependencies=SUPERUSER_ONLY)

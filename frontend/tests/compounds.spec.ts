@@ -66,9 +66,9 @@ test.describe("Compounds list", () => {
     await page.goto("/compounds")
     await page.getByRole("button", { name: "Add Compound" }).click()
 
-    await field(page, "id").fill("cfc-11")
+    await field(page, "id").fill("cfc 11")
     await field(page, "industrial_name").click()
-    await expect(page.getByText("Only letters and digits")).toBeVisible()
+    await expect(page.getByText(/^Only letters, digits/)).toBeVisible()
 
     await field(page, "id").fill(id.toUpperCase())
     await field(page, "industrial_name").fill("CFC-113")

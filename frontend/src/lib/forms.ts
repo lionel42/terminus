@@ -32,8 +32,9 @@ export function buildSchema(fields: FieldConfig[]) {
   for (const field of fields) {
     let schema = z.string().trim()
     if (field.type === "id") {
-      schema = schema.regex(/^[A-Za-z0-9]*$/, {
-        message: "Only letters and digits",
+      schema = schema.regex(/^(?:[A-Za-z0-9][A-Za-z0-9_-]*)?$/, {
+        message:
+          "Only letters, digits, - and _ (starting with a letter or digit)",
       })
     } else if (field.type === "number") {
       schema = schema.refine((v) => v === "" || Number.isFinite(Number(v)), {

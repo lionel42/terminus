@@ -40,6 +40,7 @@ from app.models.container import (
     ContainersPublic,
     ContainerUpdate,
 )
+from app.models.flags import UNUSABLE, FlagInfo, QualityFlag, flag_infos
 from app.models.instrument import (
     Instrument,
     InstrumentCreate,
@@ -58,6 +59,7 @@ from app.models.measurement import (
     MeasurementQuery,
     MeasurementResult,
     MeasurementResultCreate,
+    MeasurementResultFlagsUpdate,
     MeasurementResultPublic,
     MeasurementsPublic,
     MeasurementType,
@@ -89,6 +91,10 @@ from app.models.user import (
 )
 
 __all__ = [
+    "UNUSABLE",
+    "FlagInfo",
+    "QualityFlag",
+    "flag_infos",
     "MeasurementQuery",
     "ResultQuery",
     "ImportMode",
@@ -132,6 +138,7 @@ __all__ = [
     "MeasurementPublicWithResults",
     "MeasurementResult",
     "MeasurementResultCreate",
+    "MeasurementResultFlagsUpdate",
     "MeasurementResultPublic",
     "MeasurementUpdate",
     "MeasurementType",

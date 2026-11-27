@@ -5,6 +5,7 @@ export const MEASUREMENT_TYPES: MeasurementType[] = [
   "blank",
   "tank",
   "standard",
+  "tert",
   "labair",
   "test",
 ]

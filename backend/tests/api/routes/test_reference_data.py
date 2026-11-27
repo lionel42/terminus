@@ -59,7 +59,9 @@ def test_create_duplicate_conflicts(
     assert r.status_code == 409
 
 
-@pytest.mark.parametrize("bad_id", ["has space", "dash-ed", "", "x" * 65, "cö2"])
+@pytest.mark.parametrize(
+    "bad_id", ["has space", "dot.ted", "-x", "_x", "", "x" * 65, "cö2"]
+)
 def test_create_rejects_invalid_id(
     client: TestClient, superuser_token_headers: dict[str, str], bad_id: str
 ) -> None:
@@ -67,6 +69,26 @@ def test_create_rejects_invalid_id(
         f"{API}/compounds/", headers=superuser_token_headers, json={"id": bad_id}
     )
     assert r.status_code == 422
+
+
+@PARAMS
+def test_create_accepts_dash_and_underscore(
+    client: TestClient,
+    superuser_token_headers: dict[str, str],
+    endpoint: str,
+    payload: dict[str, str],
+) -> None:
+    # GCwerks tank names, e.g. E-223-D2 or 14m_air
+    raw_id = f"E-{random_id()}_D2"
+    r = client.post(
+        f"{API}/{endpoint}/",
+        headers=superuser_token_headers,
+        json={"id": raw_id, **payload},
+    )
+    assert r.status_code == 200, r.text
+    assert r.json()["id"] == raw_id.lower()
+    r = client.get(f"{API}/{endpoint}/{raw_id}", headers=superuser_token_headers)
+    assert r.status_code == 200, r.text
 
 
 @PARAMS

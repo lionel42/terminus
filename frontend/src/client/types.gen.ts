@@ -381,6 +381,28 @@ export type ContainersPublic = {
 };
 
 /**
+ * FlagInfo
+ */
+export type FlagInfo = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Value
+     */
+    value: number;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Unusable
+     */
+    unusable: boolean;
+};
+
+/**
  * HTTPValidationError
  */
 export type HTTPValidationError = {
@@ -473,6 +495,14 @@ export type MeasurementCreate = {
      */
     description?: string | null;
     /**
+     * Flags
+     */
+    flags?: number;
+    /**
+     * Flag Comment
+     */
+    flag_comment?: string | null;
+    /**
      * Instrument Id
      */
     instrument_id: string;
@@ -518,6 +548,14 @@ export type MeasurementPublic = {
      */
     description?: string | null;
     /**
+     * Flags
+     */
+    flags?: number;
+    /**
+     * Flag Comment
+     */
+    flag_comment?: string | null;
+    /**
      * Id
      */
     id: number;
@@ -544,6 +582,14 @@ export type MeasurementPublicWithResults = {
      * Description
      */
     description?: string | null;
+    /**
+     * Flags
+     */
+    flags?: number;
+    /**
+     * Flag Comment
+     */
+    flag_comment?: string | null;
     /**
      * Id
      */
@@ -583,9 +629,31 @@ export type MeasurementResultCreate = {
      */
     concentration?: number | null;
     /**
+     * Flags
+     */
+    flags?: number;
+    /**
+     * Flag Comment
+     */
+    flag_comment?: string | null;
+    /**
      * Compound Id
      */
     compound_id: string;
+};
+
+/**
+ * MeasurementResultFlagsUpdate
+ */
+export type MeasurementResultFlagsUpdate = {
+    /**
+     * Flags
+     */
+    flags?: number | null;
+    /**
+     * Flag Comment
+     */
+    flag_comment?: string | null;
 };
 
 /**
@@ -609,6 +677,14 @@ export type MeasurementResultPublic = {
      */
     concentration?: number | null;
     /**
+     * Flags
+     */
+    flags?: number;
+    /**
+     * Flag Comment
+     */
+    flag_comment?: string | null;
+    /**
      * Compound Id
      */
     compound_id: string;
@@ -617,7 +693,7 @@ export type MeasurementResultPublic = {
 /**
  * MeasurementType
  */
-export type MeasurementType = 'air' | 'blank' | 'tank' | 'standard' | 'labair' | 'test';
+export type MeasurementType = 'air' | 'blank' | 'tank' | 'standard' | 'tert' | 'labair' | 'test';
 
 /**
  * MeasurementUpdate
@@ -640,6 +716,14 @@ export type MeasurementUpdate = {
      * Description
      */
     description?: string | null;
+    /**
+     * Flags
+     */
+    flags?: number | null;
+    /**
+     * Flag Comment
+     */
+    flag_comment?: string | null;
 };
 
 /**
@@ -747,6 +831,22 @@ export type ResultRow = {
      * Concentration
      */
     concentration: number | null;
+    /**
+     * Flags
+     */
+    flags: number;
+    /**
+     * Flag Comment
+     */
+    flag_comment: string | null;
+    /**
+     * Measurement Flags
+     */
+    measurement_flags: number;
+    /**
+     * Measurement Flag Comment
+     */
+    measurement_flag_comment: string | null;
 };
 
 /**
@@ -2327,6 +2427,10 @@ export type measurementsReadMeasurementsData = {
          */
         measured_to?: string | null;
         /**
+         * Exclude Flags
+         */
+        exclude_flags?: number | null;
+        /**
          * Skip
          */
         skip?: number;
@@ -2380,6 +2484,24 @@ export type measurementsCreateMeasurementResponses = {
 };
 
 export type measurementsCreateMeasurementResponse = measurementsCreateMeasurementResponses[keyof measurementsCreateMeasurementResponses];
+
+export type measurementsReadFlagsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/measurements/flags';
+};
+
+export type measurementsReadFlagsResponses = {
+    /**
+     * Response Measurements-Read Flags
+     *
+     * Successful Response
+     */
+    200: Array<FlagInfo>;
+};
+
+export type measurementsReadFlagsResponse = measurementsReadFlagsResponses[keyof measurementsReadFlagsResponses];
 
 export type measurementsDeleteMeasurementData = {
     body?: never;
@@ -2534,6 +2656,40 @@ export type measurementsReplaceMeasurementResultsResponses = {
 
 export type measurementsReplaceMeasurementResultsResponse = measurementsReplaceMeasurementResultsResponses[keyof measurementsReplaceMeasurementResultsResponses];
 
+export type measurementsUpdateResultFlagsData = {
+    body: MeasurementResultFlagsUpdate;
+    path: {
+        /**
+         * Measurement Id
+         */
+        measurement_id: number;
+        /**
+         * Compound Id
+         */
+        compound_id: string;
+    };
+    query?: never;
+    url: '/api/v1/measurements/{measurement_id}/results/{compound_id}';
+};
+
+export type measurementsUpdateResultFlagsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type measurementsUpdateResultFlagsError = measurementsUpdateResultFlagsErrors[keyof measurementsUpdateResultFlagsErrors];
+
+export type measurementsUpdateResultFlagsResponses = {
+    /**
+     * Successful Response
+     */
+    200: MeasurementResultPublic;
+};
+
+export type measurementsUpdateResultFlagsResponse = measurementsUpdateResultFlagsResponses[keyof measurementsUpdateResultFlagsResponses];
+
 export type resultsReadResultsData = {
     body?: never;
     path?: never;
@@ -2562,6 +2718,10 @@ export type resultsReadResultsData = {
          * Measured To
          */
         measured_to?: string | null;
+        /**
+         * Exclude Flags
+         */
+        exclude_flags?: number | null;
         /**
          * Compound Id
          */
@@ -2624,6 +2784,10 @@ export type resultsReadResultsCsvData = {
          * Measured To
          */
         measured_to?: string | null;
+        /**
+         * Exclude Flags
+         */
+        exclude_flags?: number | null;
         /**
          * Compound Id
          */

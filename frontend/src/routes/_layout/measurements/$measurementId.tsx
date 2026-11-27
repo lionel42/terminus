@@ -10,6 +10,7 @@ import {
 import { ActionsMenu } from "@/components/Common/ActionsMenu"
 import { DeleteMenuItem } from "@/components/Common/DeleteMenuItem"
 import { EntityFormDialog } from "@/components/Common/EntityFormDialog"
+import { FlagBadges } from "@/components/Domain/FlagBadges"
 import {
   useCompoundOptions,
   useInstrumentOptions,
@@ -146,9 +147,9 @@ function MeasurementDetail() {
       </div>
 
       <Card>
-        <CardContent className="grid grid-cols-2 gap-6 md:grid-cols-5">
+        <CardContent className="grid grid-cols-2 gap-6 md:grid-cols-6">
           {isLoading || !m ? (
-            Array.from({ length: 5 }).map((_, i) => (
+            Array.from({ length: 6 }).map((_, i) => (
               <Skeleton key={i} className="h-10 w-full" />
             ))
           ) : (
@@ -180,6 +181,9 @@ function MeasurementDetail() {
                 )}
               </Field>
               <Field label="Description">{orDash(m.description)}</Field>
+              <Field label="Flags">
+                <FlagBadges flags={m.flags ?? 0} comment={m.flag_comment} />
+              </Field>
             </>
           )}
         </CardContent>
@@ -200,6 +204,7 @@ function MeasurementDetail() {
                 <TableHead className="text-right">Retention time</TableHead>
                 <TableHead className="text-right">Concentration</TableHead>
                 <TableHead>Unit</TableHead>
+                <TableHead>Flags</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -227,13 +232,19 @@ function MeasurementDetail() {
                           {formatNumber(r.concentration)}
                         </TableCell>
                         <TableCell>{orDash(info?.unit)}</TableCell>
+                        <TableCell>
+                          <FlagBadges
+                            flags={r.flags ?? 0}
+                            comment={r.flag_comment}
+                          />
+                        </TableCell>
                       </TableRow>
                     )
                   })
               ) : (
                 <TableRow className="hover:bg-transparent">
                   <TableCell
-                    colSpan={7}
+                    colSpan={8}
                     className="h-24 text-center text-muted-foreground"
                   >
                     {isLoading

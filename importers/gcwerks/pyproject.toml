@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "terminus-gcwerks"
+version = "0.1.0"
+description = "Import the runs of GCwerks directories into terminus"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "gcwerks",
+    "httpx>=0.25",
+    "pandas>=2.1",
+]
+
+[project.scripts]
+terminus-gcwerks = "terminus_gcwerks.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

@@ -72,10 +72,14 @@ describe("buildSchema", () => {
     expect(errors({ ...empty, id: "   " })).toEqual({ id: "Id is required" })
   })
 
-  it("restricts ids to letters and digits", () => {
-    expect(errors({ ...empty, id: "cfc-11" })).toEqual({
-      id: "Only letters and digits",
-    })
+  it("restricts ids to letters, digits, - and _", () => {
+    expect(errors({ ...empty, id: "E-223-d2" })).toEqual({})
+    expect(errors({ ...empty, id: "14m_air" })).toEqual({})
+    for (const id of ["cfc 11", "cfc.11", "-e223", "_x"]) {
+      expect(errors({ ...empty, id })).toEqual({
+        id: "Only letters, digits, - and _ (starting with a letter or digit)",
+      })
+    }
   })
 
   it("checks numbers", () => {
