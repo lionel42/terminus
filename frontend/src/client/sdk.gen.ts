@@ -2,7 +2,7 @@
 
 import { type Client, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { compoundsCreateCompoundData, compoundsCreateCompoundErrors, compoundsCreateCompoundResponses, compoundsDeleteCompoundData, compoundsDeleteCompoundErrors, compoundsDeleteCompoundResponses, compoundsReadCompoundData, compoundsReadCompoundErrors, compoundsReadCompoundResponses, compoundsReadCompoundsData, compoundsReadCompoundsErrors, compoundsReadCompoundsResponses, compoundsUpdateCompoundData, compoundsUpdateCompoundErrors, compoundsUpdateCompoundResponses, containersCreateContainerData, containersCreateContainerErrors, containersCreateContainerResponses, containersDeleteContainerData, containersDeleteContainerErrors, containersDeleteContainerResponses, containersReadContainerCurrentSampleData, containersReadContainerCurrentSampleErrors, containersReadContainerCurrentSampleResponses, containersReadContainerData, containersReadContainerErrors, containersReadContainerResponses, containersReadContainerSamplesData, containersReadContainerSamplesErrors, containersReadContainerSamplesResponses, containersReadContainersData, containersReadContainersErrors, containersReadContainersResponses, containersUpdateContainerData, containersUpdateContainerErrors, containersUpdateContainerResponses, instrumentsCreateInstrumentData, instrumentsCreateInstrumentErrors, instrumentsCreateInstrumentResponses, instrumentsDeleteInstrumentData, instrumentsDeleteInstrumentErrors, instrumentsDeleteInstrumentResponses, instrumentsReadInstrumentData, instrumentsReadInstrumentErrors, instrumentsReadInstrumentResponses, instrumentsReadInstrumentsData, instrumentsReadInstrumentsErrors, instrumentsReadInstrumentsResponses, instrumentsUpdateInstrumentData, instrumentsUpdateInstrumentErrors, instrumentsUpdateInstrumentResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, measurementsCreateMeasurementData, measurementsCreateMeasurementErrors, measurementsCreateMeasurementResponses, measurementsDeleteMeasurementData, measurementsDeleteMeasurementErrors, measurementsDeleteMeasurementResponses, measurementsImportMeasurementsData, measurementsImportMeasurementsErrors, measurementsImportMeasurementsResponses, measurementsReadMeasurementData, measurementsReadMeasurementErrors, measurementsReadMeasurementResponses, measurementsReadMeasurementsData, measurementsReadMeasurementsErrors, measurementsReadMeasurementsResponses, measurementsReplaceMeasurementResultsData, measurementsReplaceMeasurementResultsErrors, measurementsReplaceMeasurementResultsResponses, measurementsUpdateMeasurementData, measurementsUpdateMeasurementErrors, measurementsUpdateMeasurementResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, resultsReadResultsCsvData, resultsReadResultsCsvErrors, resultsReadResultsCsvResponses, resultsReadResultsData, resultsReadResultsErrors, resultsReadResultsResponses, samplesCreateSampleData, samplesCreateSampleErrors, samplesCreateSampleResponses, samplesDeleteSampleData, samplesDeleteSampleErrors, samplesDeleteSampleResponses, samplesReadSampleData, samplesReadSampleErrors, samplesReadSampleResponses, samplesReadSamplesData, samplesReadSamplesErrors, samplesReadSamplesResponses, samplesUpdateSampleData, samplesUpdateSampleErrors, samplesUpdateSampleResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
+import type { compoundsCreateAliasData, compoundsCreateAliasErrors, compoundsCreateAliasResponses, compoundsCreateBoilingPointData, compoundsCreateBoilingPointErrors, compoundsCreateBoilingPointResponses, compoundsCreateCompoundData, compoundsCreateCompoundErrors, compoundsCreateCompoundResponses, compoundsDeleteAliasData, compoundsDeleteAliasErrors, compoundsDeleteAliasResponses, compoundsDeleteBoilingPointData, compoundsDeleteBoilingPointErrors, compoundsDeleteBoilingPointResponses, compoundsDeleteCompoundData, compoundsDeleteCompoundErrors, compoundsDeleteCompoundResponses, compoundsReadCompoundData, compoundsReadCompoundErrors, compoundsReadCompoundResponses, compoundsReadCompoundsData, compoundsReadCompoundsErrors, compoundsReadCompoundsResponses, compoundsResolveCompoundData, compoundsResolveCompoundErrors, compoundsResolveCompoundResponses, compoundsUpdateCompoundData, compoundsUpdateCompoundErrors, compoundsUpdateCompoundResponses, containersCreateContainerData, containersCreateContainerErrors, containersCreateContainerResponses, containersDeleteContainerData, containersDeleteContainerErrors, containersDeleteContainerResponses, containersReadContainerCurrentSampleData, containersReadContainerCurrentSampleErrors, containersReadContainerCurrentSampleResponses, containersReadContainerData, containersReadContainerErrors, containersReadContainerResponses, containersReadContainerSamplesData, containersReadContainerSamplesErrors, containersReadContainerSamplesResponses, containersReadContainersData, containersReadContainersErrors, containersReadContainersResponses, containersUpdateContainerData, containersUpdateContainerErrors, containersUpdateContainerResponses, instrumentsCreateInstrumentData, instrumentsCreateInstrumentErrors, instrumentsCreateInstrumentResponses, instrumentsDeleteInstrumentData, instrumentsDeleteInstrumentErrors, instrumentsDeleteInstrumentResponses, instrumentsReadInstrumentData, instrumentsReadInstrumentErrors, instrumentsReadInstrumentResponses, instrumentsReadInstrumentsData, instrumentsReadInstrumentsErrors, instrumentsReadInstrumentsResponses, instrumentsUpdateInstrumentData, instrumentsUpdateInstrumentErrors, instrumentsUpdateInstrumentResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, measurementsCreateMeasurementData, measurementsCreateMeasurementErrors, measurementsCreateMeasurementResponses, measurementsDeleteMeasurementData, measurementsDeleteMeasurementErrors, measurementsDeleteMeasurementResponses, measurementsImportMeasurementsData, measurementsImportMeasurementsErrors, measurementsImportMeasurementsResponses, measurementsReadMeasurementData, measurementsReadMeasurementErrors, measurementsReadMeasurementResponses, measurementsReadMeasurementsData, measurementsReadMeasurementsErrors, measurementsReadMeasurementsResponses, measurementsReplaceMeasurementResultsData, measurementsReplaceMeasurementResultsErrors, measurementsReplaceMeasurementResultsResponses, measurementsUpdateMeasurementData, measurementsUpdateMeasurementErrors, measurementsUpdateMeasurementResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, resultsReadResultsCsvData, resultsReadResultsCsvErrors, resultsReadResultsCsvResponses, resultsReadResultsData, resultsReadResultsErrors, resultsReadResultsResponses, samplesCreateSampleData, samplesCreateSampleErrors, samplesCreateSampleResponses, samplesDeleteSampleData, samplesDeleteSampleErrors, samplesDeleteSampleResponses, samplesReadSampleData, samplesReadSampleErrors, samplesReadSampleResponses, samplesReadSamplesData, samplesReadSamplesErrors, samplesReadSamplesResponses, samplesUpdateSampleData, samplesUpdateSampleErrors, samplesUpdateSampleResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -288,7 +288,7 @@ export class CompoundsService {
     /**
      * Read Compounds
      *
-     * List compounds.
+     * List compounds with their aliases and boiling points.
      */
     public static readCompounds<ThrowOnError extends boolean = true>(options?: Options<compoundsReadCompoundsData, ThrowOnError>) {
         return (options?.client ?? client).get<compoundsReadCompoundsResponses, compoundsReadCompoundsErrors, ThrowOnError>({
@@ -318,9 +318,27 @@ export class CompoundsService {
     }
     
     /**
+     * Resolve Compound
+     *
+     * Find the compound named `name`.
+     *
+     * Tries, in order: id, alias, industrial name, CAS number, InChIKey,
+     * IUPAC name (case-insensitive).
+     */
+    public static resolveCompound<ThrowOnError extends boolean = true>(options: Options<compoundsResolveCompoundData, ThrowOnError>) {
+        return (options.client ?? client).get<compoundsResolveCompoundResponses, compoundsResolveCompoundErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/compounds/resolve',
+            ...options
+        });
+    }
+    
+    /**
      * Delete Compound
      *
-     * Delete a compound (only if no measurement result uses it).
+     * Delete a compound with its aliases and boiling points (only if no
+     * measurement result uses it).
      */
     public static deleteCompound<ThrowOnError extends boolean = true>(options: Options<compoundsDeleteCompoundData, ThrowOnError>) {
         return (options.client ?? client).delete<compoundsDeleteCompoundResponses, compoundsDeleteCompoundErrors, ThrowOnError>({
@@ -334,7 +352,7 @@ export class CompoundsService {
     /**
      * Read Compound
      *
-     * Get a compound by id.
+     * Get a compound by id, with its aliases and boiling points.
      */
     public static readCompound<ThrowOnError extends boolean = true>(options: Options<compoundsReadCompoundData, ThrowOnError>) {
         return (options.client ?? client).get<compoundsReadCompoundResponses, compoundsReadCompoundErrors, ThrowOnError>({
@@ -360,6 +378,70 @@ export class CompoundsService {
                 'Content-Type': 'application/json',
                 ...options.headers
             }
+        });
+    }
+    
+    /**
+     * Create Alias
+     *
+     * Add an alias. Aliases are unique over all compounds (ignoring case).
+     */
+    public static createAlias<ThrowOnError extends boolean = true>(options: Options<compoundsCreateAliasData, ThrowOnError>) {
+        return (options.client ?? client).post<compoundsCreateAliasResponses, compoundsCreateAliasErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/compounds/{compound_id}/aliases',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Alias
+     *
+     * Remove an alias.
+     */
+    public static deleteAlias<ThrowOnError extends boolean = true>(options: Options<compoundsDeleteAliasData, ThrowOnError>) {
+        return (options.client ?? client).delete<compoundsDeleteAliasResponses, compoundsDeleteAliasErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/compounds/{compound_id}/aliases/{alias_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Boiling Point
+     *
+     * Add a boiling point with its source.
+     */
+    public static createBoilingPoint<ThrowOnError extends boolean = true>(options: Options<compoundsCreateBoilingPointData, ThrowOnError>) {
+        return (options.client ?? client).post<compoundsCreateBoilingPointResponses, compoundsCreateBoilingPointErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/compounds/{compound_id}/boiling-points',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Boiling Point
+     *
+     * Remove a boiling point.
+     */
+    public static deleteBoilingPoint<ThrowOnError extends boolean = true>(options: Options<compoundsDeleteBoilingPointData, ThrowOnError>) {
+        return (options.client ?? client).delete<compoundsDeleteBoilingPointResponses, compoundsDeleteBoilingPointErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/compounds/{compound_id}/boiling-points/{boiling_point_id}',
+            ...options
         });
     }
 }

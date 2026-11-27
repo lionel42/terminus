@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Pencil, Plus } from "lucide-react"
+import { Pencil, Plus, Sparkles } from "lucide-react"
 import { useState } from "react"
 import { type Resolver, useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -36,57 +35,23 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import useCustomToast from "@/hooks/useCustomToast"
-import { fromDatetimeInput } from "@/lib/format"
+import {
+  type Body,
+  buildSchema,
+  type FieldConfig,
+  type FillAction,
+  type FormValues,
+  NONE,
+  toBody,
+} from "@/lib/forms"
 import { handleError } from "@/utils"
 
-export type FieldConfig = {
-  name: string
-  label: string
-  /** "id": lower-case alphanumeric identifier; "datetime": entered in UTC */
-  type?: "text" | "id" | "datetime" | "select"
-  required?: boolean
-  placeholder?: string
-  description?: string
-  options?: { value: string; label: string }[]
-}
-
-export type FormValues = Record<string, string>
-
-const NONE = "__none__"
-
-function buildSchema(fields: FieldConfig[]) {
-  const shape: Record<string, z.ZodType<string>> = {}
-  for (const field of fields) {
-    let schema = z.string().trim()
-    if (field.type === "id") {
-      schema = schema.regex(/^[A-Za-z0-9]*$/, {
-        message: "Only letters and digits",
-      })
-    }
-    shape[field.name] = field.required
-      ? schema.min(1, { message: `${field.label} is required` })
-      : schema
-  }
-  return z.object(shape)
-}
-
-/** Form values -> API body: ids lower-cased, datetimes as UTC ISO, "" -> null. */
-export function toBody(fields: FieldConfig[], values: FormValues) {
-  const body: Record<string, string | null> = {}
-  for (const field of fields) {
-    const value = values[field.name]?.trim() ?? ""
-    if (!value || value === NONE) {
-      body[field.name] = null
-    } else if (field.type === "id") {
-      body[field.name] = value.toLowerCase()
-    } else if (field.type === "datetime") {
-      body[field.name] = fromDatetimeInput(value)
-    } else {
-      body[field.name] = value
-    }
-  }
-  return body
-}
+export type {
+  Body,
+  FieldConfig,
+  FillAction,
+  FormValues,
+} from "@/lib/forms"
 
 interface EntityFormDialogProps {
   mode: "create" | "edit"
@@ -94,11 +59,15 @@ interface EntityFormDialogProps {
   fields: FieldConfig[]
   initialValues?: FormValues
   /** Receives the API body built from the form. */
-  onSubmit: (body: Record<string, string | null>) => Promise<unknown>
+  onSubmit: (body: Body) => Promise<unknown>
   /** Query keys to refresh after a successful save. */
   invalidate: unknown[][]
   /** Called after a successful save (e.g. to close a dropdown menu). */
   onSuccess?: () => void
+  /** Optional button that fills the empty fields from an external source. */
+  fill?: FillAction
+  /** Custom trigger for create mode (default: an "Add <entity>" button). */
+  triggerLabel?: string
 }
 
 export function EntityFormDialog({
@@ -109,6 +78,8 @@ export function EntityFormDialog({
   onSubmit,
   invalidate,
   onSuccess,
+  fill,
+  triggerLabel,
 }: EntityFormDialogProps) {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
@@ -144,6 +115,26 @@ export function EntityFormDialog({
     },
   })
 
+  const filler = useMutation({
+    mutationFn: () => fill!.run(form.getValues()),
+    onSuccess: (found) => {
+      const filled: string[] = []
+      for (const field of fields) {
+        const value = found[field.name]
+        if (value && !form.getValues(field.name)?.trim()) {
+          form.setValue(field.name, value, { shouldDirty: true })
+          filled.push(field.label)
+        }
+      }
+      showSuccessToast(
+        filled.length
+          ? `Filled: ${filled.join(", ")}`
+          : "Nothing new to fill (only empty fields are filled)",
+      )
+    },
+    onError: handleError.bind(showErrorToast),
+  })
+
   const title = `${mode === "create" ? "Add" : "Edit"} ${entityLabel}`
 
   return (
@@ -158,7 +149,7 @@ export function EntityFormDialog({
         <DialogTrigger asChild>
           <Button>
             <Plus className="mr-2" />
-            {title}
+            {triggerLabel ?? title}
           </Button>
         </DialogTrigger>
       ) : (
@@ -170,7 +161,7 @@ export function EntityFormDialog({
           Edit
         </DropdownMenuItem>
       )}
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
@@ -225,6 +216,9 @@ export function EntityFormDialog({
                                 ? "datetime-local"
                                 : "text"
                             }
+                            inputMode={
+                              config.type === "number" ? "decimal" : undefined
+                            }
                             step={config.type === "datetime" ? 1 : undefined}
                             placeholder={config.placeholder}
                           />
@@ -240,6 +234,18 @@ export function EntityFormDialog({
               ))}
             </div>
             <DialogFooter>
+              {fill && (
+                <LoadingButton
+                  type="button"
+                  variant="secondary"
+                  className="sm:mr-auto"
+                  loading={filler.isPending}
+                  onClick={() => filler.mutate()}
+                >
+                  <Sparkles className="mr-2" />
+                  {fill.label}
+                </LoadingButton>
+              )}
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
                   Cancel

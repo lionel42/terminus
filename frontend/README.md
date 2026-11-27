@@ -91,6 +91,21 @@ The frontend code is structured as follows:
 - `frontend/src/lib` - Shared frontend utilities.
 - `frontend/src/routes` - The frontend routes and pages.
 
+## Unit Tests with Vitest
+
+Pure logic (PubChem parsing, CAS check digits, links, form conversion, date and
+number formatting) is covered by Vitest tests next to the code
+(`src/**/*.test.ts`). They need neither the backend nor the network: PubChem
+responses are recorded in `src/lib/__fixtures__/`.
+
+```bash
+bun run test:unit        # once
+bun run test:unit:watch  # re-run on change
+```
+
+They run on Node.js (`bun run` uses the `node` on your PATH). Running Vitest
+under Bun's Node shim breaks the `zod` import.
+
 ## End-to-End Testing with Playwright
 
 The frontend includes initial end-to-end tests using Playwright. To run the tests, you need to have the Docker Compose stack running. Start the stack with the following command:
@@ -117,6 +132,11 @@ To stop and remove the Docker Compose stack and clean the data created in tests,
 ```bash
 docker compose down -v
 ```
+
+The domain specs (`compounds`, `measurements`, `reference-data`, `permissions`)
+create their own data through the API with random ids (`tests/utils/domain.ts`),
+so they can run in parallel and repeatedly on the same database. PubChem and
+Wikidata are mocked with `page.route`, so the tests do not depend on them.
 
 To update the tests, navigate to the tests directory and modify the existing test files or add new ones as needed.
 

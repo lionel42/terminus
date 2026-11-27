@@ -4,13 +4,13 @@ import { type ReactNode, useState } from "react"
 import { ActionsMenu } from "@/components/Common/ActionsMenu"
 import { DeleteMenuItem } from "@/components/Common/DeleteMenuItem"
 import {
+  type Body,
   EntityFormDialog,
   type FieldConfig,
+  type FillAction,
 } from "@/components/Common/EntityFormDialog"
 import { type Column, ServerTable } from "@/components/Common/ServerTable"
 import useAuth from "@/hooks/useAuth"
-
-type Body = Record<string, string | null>
 
 export interface ReferencePageProps<T extends { id: string }> {
   title: string
@@ -27,6 +27,14 @@ export interface ReferencePageProps<T extends { id: string }> {
   remove: (id: string) => Promise<unknown>
   /** Extra content per row, shown before the actions menu */
   rowExtras?: (row: T) => ReactNode
+  /** Custom rendering of the id cell (e.g. a link to a detail page) */
+  renderId?: (row: T) => ReactNode
+  /** Optional "fill" button in the create/edit dialogs */
+  fill?: FillAction
+  /** Filter controls shown above the table */
+  toolbar?: ReactNode
+  /** Filter values used by `list`: part of the query key, resets the page */
+  filters?: unknown
 }
 
 const PAGE_SIZE = 50
@@ -38,9 +46,16 @@ export function ReferencePage<T extends { id: string }>(
   const { user } = useAuth()
   const canWrite = !!user?.is_superuser
   const [page, setPage] = useState(1)
+  // Back to the first page whenever the filters change
+  const filtersKey = JSON.stringify(props.filters ?? null)
+  const [lastFiltersKey, setLastFiltersKey] = useState(filtersKey)
+  if (filtersKey !== lastFiltersKey) {
+    setLastFiltersKey(filtersKey)
+    setPage(1)
+  }
 
   const { data, isLoading } = useQuery({
-    queryKey: [props.queryKey, page],
+    queryKey: [props.queryKey, page, filtersKey],
     queryFn: () => props.list((page - 1) * PAGE_SIZE, PAGE_SIZE),
     placeholderData: keepPreviousData,
   })
@@ -57,7 +72,12 @@ export function ReferencePage<T extends { id: string }>(
     {
       key: "id",
       header: "Id",
-      cell: (row) => <span className="font-mono font-medium">{row.id}</span>,
+      cell: (row) =>
+        props.renderId ? (
+          props.renderId(row)
+        ) : (
+          <span className="font-mono font-medium">{row.id}</span>
+        ),
     },
     ...props.columns,
     {
@@ -84,6 +104,7 @@ export function ReferencePage<T extends { id: string }>(
                     onSubmit={(body) => props.update(row.id, body)}
                     invalidate={[[props.queryKey]]}
                     onSuccess={close}
+                    fill={props.fill}
                   />
                   <DeleteMenuItem
                     entityLabel={props.entityLabel}
@@ -115,9 +136,11 @@ export function ReferencePage<T extends { id: string }>(
             fields={[idField, ...props.fields]}
             onSubmit={props.create}
             invalidate={[[props.queryKey]]}
+            fill={props.fill}
           />
         )}
       </div>
+      {props.toolbar}
       <ServerTable
         columns={columns}
         rows={data?.data}

@@ -16,12 +16,13 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
-import { Route as LayoutCompoundsRouteImport } from './routes/_layout/compounds'
 import { Route as LayoutContainersRouteImport } from './routes/_layout/containers'
 import { Route as LayoutInstrumentsRouteImport } from './routes/_layout/instruments'
 import { Route as LayoutResultsRouteImport } from './routes/_layout/results'
 import { Route as LayoutSamplesRouteImport } from './routes/_layout/samples'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutCompoundsIndexRouteImport } from './routes/_layout/compounds/index'
+import { Route as LayoutCompoundsCompoundIdRouteImport } from './routes/_layout/compounds/$compoundId'
 import { Route as LayoutMeasurementsIndexRouteImport } from './routes/_layout/measurements/index'
 import { Route as LayoutMeasurementsMeasurementIdRouteImport } from './routes/_layout/measurements/$measurementId'
 
@@ -59,11 +60,6 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutCompoundsRoute = LayoutCompoundsRouteImport.update({
-  id: '/compounds',
-  path: '/compounds',
-  getParentRoute: () => LayoutRoute,
-} as any)
 const LayoutContainersRoute = LayoutContainersRouteImport.update({
   id: '/containers',
   path: '/containers',
@@ -89,6 +85,17 @@ const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutCompoundsIndexRoute = LayoutCompoundsIndexRouteImport.update({
+  id: '/compounds/',
+  path: '/compounds/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutCompoundsCompoundIdRoute =
+  LayoutCompoundsCompoundIdRouteImport.update({
+    id: '/compounds/$compoundId',
+    path: '/compounds/$compoundId',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutMeasurementsIndexRoute = LayoutMeasurementsIndexRouteImport.update({
   id: '/measurements/',
   path: '/measurements/',
@@ -108,13 +115,14 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
-  '/compounds': typeof LayoutCompoundsRoute
   '/containers': typeof LayoutContainersRoute
   '/instruments': typeof LayoutInstrumentsRoute
   '/results': typeof LayoutResultsRoute
   '/samples': typeof LayoutSamplesRoute
   '/settings': typeof LayoutSettingsRoute
+  '/compounds/$compoundId': typeof LayoutCompoundsCompoundIdRoute
   '/measurements/$measurementId': typeof LayoutMeasurementsMeasurementIdRoute
+  '/compounds/': typeof LayoutCompoundsIndexRoute
   '/measurements/': typeof LayoutMeasurementsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -123,14 +131,15 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
-  '/compounds': typeof LayoutCompoundsRoute
   '/containers': typeof LayoutContainersRoute
   '/instruments': typeof LayoutInstrumentsRoute
   '/results': typeof LayoutResultsRoute
   '/samples': typeof LayoutSamplesRoute
   '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
+  '/compounds/$compoundId': typeof LayoutCompoundsCompoundIdRoute
   '/measurements/$measurementId': typeof LayoutMeasurementsMeasurementIdRoute
+  '/compounds': typeof LayoutCompoundsIndexRoute
   '/measurements': typeof LayoutMeasurementsIndexRoute
 }
 export interface FileRoutesById {
@@ -141,14 +150,15 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
-  '/_layout/compounds': typeof LayoutCompoundsRoute
   '/_layout/containers': typeof LayoutContainersRoute
   '/_layout/instruments': typeof LayoutInstrumentsRoute
   '/_layout/results': typeof LayoutResultsRoute
   '/_layout/samples': typeof LayoutSamplesRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/compounds/$compoundId': typeof LayoutCompoundsCompoundIdRoute
   '/_layout/measurements/$measurementId': typeof LayoutMeasurementsMeasurementIdRoute
+  '/_layout/compounds/': typeof LayoutCompoundsIndexRoute
   '/_layout/measurements/': typeof LayoutMeasurementsIndexRoute
 }
 export interface FileRouteTypes {
@@ -160,13 +170,14 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
-    | '/compounds'
     | '/containers'
     | '/instruments'
     | '/results'
     | '/samples'
     | '/settings'
+    | '/compounds/$compoundId'
     | '/measurements/$measurementId'
+    | '/compounds/'
     | '/measurements/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -175,14 +186,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
-    | '/compounds'
     | '/containers'
     | '/instruments'
     | '/results'
     | '/samples'
     | '/settings'
     | '/'
+    | '/compounds/$compoundId'
     | '/measurements/$measurementId'
+    | '/compounds'
     | '/measurements'
   id:
     | '__root__'
@@ -192,14 +204,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_layout/admin'
-    | '/_layout/compounds'
     | '/_layout/containers'
     | '/_layout/instruments'
     | '/_layout/results'
     | '/_layout/samples'
     | '/_layout/settings'
     | '/_layout/'
+    | '/_layout/compounds/$compoundId'
     | '/_layout/measurements/$measurementId'
+    | '/_layout/compounds/'
     | '/_layout/measurements/'
   fileRoutesById: FileRoutesById
 }
@@ -262,13 +275,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/compounds': {
-      id: '/_layout/compounds'
-      path: '/compounds'
-      fullPath: '/compounds'
-      preLoaderRoute: typeof LayoutCompoundsRouteImport
-      parentRoute: typeof LayoutRoute
-    }
     '/_layout/containers': {
       id: '/_layout/containers'
       path: '/containers'
@@ -304,6 +310,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/compounds/': {
+      id: '/_layout/compounds/'
+      path: '/compounds'
+      fullPath: '/compounds/'
+      preLoaderRoute: typeof LayoutCompoundsIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/compounds/$compoundId': {
+      id: '/_layout/compounds/$compoundId'
+      path: '/compounds/$compoundId'
+      fullPath: '/compounds/$compoundId'
+      preLoaderRoute: typeof LayoutCompoundsCompoundIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/measurements/': {
       id: '/_layout/measurements/'
       path: '/measurements'
@@ -323,27 +343,29 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
-  LayoutCompoundsRoute: typeof LayoutCompoundsRoute
   LayoutContainersRoute: typeof LayoutContainersRoute
   LayoutInstrumentsRoute: typeof LayoutInstrumentsRoute
   LayoutResultsRoute: typeof LayoutResultsRoute
   LayoutSamplesRoute: typeof LayoutSamplesRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCompoundsCompoundIdRoute: typeof LayoutCompoundsCompoundIdRoute
   LayoutMeasurementsMeasurementIdRoute: typeof LayoutMeasurementsMeasurementIdRoute
+  LayoutCompoundsIndexRoute: typeof LayoutCompoundsIndexRoute
   LayoutMeasurementsIndexRoute: typeof LayoutMeasurementsIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
-  LayoutCompoundsRoute: LayoutCompoundsRoute,
   LayoutContainersRoute: LayoutContainersRoute,
   LayoutInstrumentsRoute: LayoutInstrumentsRoute,
   LayoutResultsRoute: LayoutResultsRoute,
   LayoutSamplesRoute: LayoutSamplesRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCompoundsCompoundIdRoute: LayoutCompoundsCompoundIdRoute,
   LayoutMeasurementsMeasurementIdRoute: LayoutMeasurementsMeasurementIdRoute,
+  LayoutCompoundsIndexRoute: LayoutCompoundsIndexRoute,
   LayoutMeasurementsIndexRoute: LayoutMeasurementsIndexRoute,
 }
 

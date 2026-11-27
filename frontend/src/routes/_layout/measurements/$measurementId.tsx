@@ -32,6 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import useAuth from "@/hooks/useAuth"
+import { compoundName } from "@/lib/compound"
 import { formatNumber, formatUtc } from "@/lib/format"
 
 export const Route = createFileRoute("/_layout/measurements/$measurementId")({
@@ -212,7 +213,7 @@ function MeasurementDetail() {
                         <TableCell className="font-mono font-medium">
                           {r.compound_id}
                         </TableCell>
-                        <TableCell>{orDash(info?.name)}</TableCell>
+                        <TableCell>{orDash(compoundName(info))}</TableCell>
                         <TableCell className="text-right tabular-nums">
                           {formatNumber(r.area)}
                         </TableCell>

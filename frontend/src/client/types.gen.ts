@@ -35,13 +35,97 @@ export type Body_login_login_access_token = {
 };
 
 /**
+ * BoilingPointCreate
+ */
+export type BoilingPointCreate = {
+    /**
+     * Temperature C
+     */
+    temperature_c: number;
+    /**
+     * Source
+     */
+    source: string;
+    /**
+     * Reference Url
+     */
+    reference_url?: string | null;
+    /**
+     * Note
+     */
+    note?: string | null;
+};
+
+/**
+ * BoilingPointPublic
+ */
+export type BoilingPointPublic = {
+    /**
+     * Temperature C
+     */
+    temperature_c: number;
+    /**
+     * Source
+     */
+    source: string;
+    /**
+     * Reference Url
+     */
+    reference_url?: string | null;
+    /**
+     * Note
+     */
+    note?: string | null;
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Compound Id
+     */
+    compound_id: string;
+};
+
+/**
+ * CompoundAliasCreate
+ */
+export type CompoundAliasCreate = {
+    /**
+     * Alias
+     */
+    alias: string;
+};
+
+/**
+ * CompoundAliasPublic
+ */
+export type CompoundAliasPublic = {
+    /**
+     * Alias
+     */
+    alias: string;
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Compound Id
+     */
+    compound_id: string;
+};
+
+/**
  * CompoundCreate
  */
 export type CompoundCreate = {
     /**
-     * Name
+     * Industrial Name
      */
-    name?: string | null;
+    industrial_name?: string | null;
+    /**
+     * Iupac Name
+     */
+    iupac_name?: string | null;
     /**
      * Formula
      */
@@ -50,10 +134,39 @@ export type CompoundCreate = {
      * Unit
      */
     unit?: string | null;
+    status?: CompoundStatus | null;
     /**
      * Description
      */
     description?: string | null;
+    /**
+     * Cas Number
+     */
+    cas_number?: string | null;
+    /**
+     * Pubchem Cid
+     */
+    pubchem_cid?: number | null;
+    /**
+     * Inchikey
+     */
+    inchikey?: string | null;
+    /**
+     * Inchi
+     */
+    inchi?: string | null;
+    /**
+     * Smiles
+     */
+    smiles?: string | null;
+    /**
+     * Wikidata Id
+     */
+    wikidata_id?: string | null;
+    /**
+     * Molar Mass
+     */
+    molar_mass?: number | null;
     /**
      * Id
      */
@@ -61,13 +174,17 @@ export type CompoundCreate = {
 };
 
 /**
- * CompoundPublic
+ * CompoundPublicWithDetails
  */
-export type CompoundPublic = {
+export type CompoundPublicWithDetails = {
     /**
-     * Name
+     * Industrial Name
      */
-    name?: string | null;
+    industrial_name?: string | null;
+    /**
+     * Iupac Name
+     */
+    iupac_name?: string | null;
     /**
      * Formula
      */
@@ -76,24 +193,72 @@ export type CompoundPublic = {
      * Unit
      */
     unit?: string | null;
+    status?: CompoundStatus | null;
     /**
      * Description
      */
     description?: string | null;
     /**
+     * Cas Number
+     */
+    cas_number?: string | null;
+    /**
+     * Pubchem Cid
+     */
+    pubchem_cid?: number | null;
+    /**
+     * Inchikey
+     */
+    inchikey?: string | null;
+    /**
+     * Inchi
+     */
+    inchi?: string | null;
+    /**
+     * Smiles
+     */
+    smiles?: string | null;
+    /**
+     * Wikidata Id
+     */
+    wikidata_id?: string | null;
+    /**
+     * Molar Mass
+     */
+    molar_mass?: number | null;
+    /**
      * Id
      */
     id: string;
+    /**
+     * Aliases
+     */
+    aliases?: Array<CompoundAliasPublic>;
+    /**
+     * Boiling Points
+     */
+    boiling_points?: Array<BoilingPointPublic>;
 };
+
+/**
+ * CompoundStatus
+ */
+export type CompoundStatus = 'measured' | 'target' | 'suspect';
 
 /**
  * CompoundUpdate
+ *
+ * Every field is optional: send only what changes, null clears.
  */
 export type CompoundUpdate = {
     /**
-     * Name
+     * Industrial Name
      */
-    name?: string | null;
+    industrial_name?: string | null;
+    /**
+     * Iupac Name
+     */
+    iupac_name?: string | null;
     /**
      * Formula
      */
@@ -102,10 +267,39 @@ export type CompoundUpdate = {
      * Unit
      */
     unit?: string | null;
+    status?: CompoundStatus | null;
     /**
      * Description
      */
     description?: string | null;
+    /**
+     * Cas Number
+     */
+    cas_number?: string | null;
+    /**
+     * Pubchem Cid
+     */
+    pubchem_cid?: number | null;
+    /**
+     * Inchikey
+     */
+    inchikey?: string | null;
+    /**
+     * Inchi
+     */
+    inchi?: string | null;
+    /**
+     * Smiles
+     */
+    smiles?: string | null;
+    /**
+     * Wikidata Id
+     */
+    wikidata_id?: string | null;
+    /**
+     * Molar Mass
+     */
+    molar_mass?: number | null;
 };
 
 /**
@@ -115,7 +309,7 @@ export type CompoundsPublic = {
     /**
      * Data
      */
-    data: Array<CompoundPublic>;
+    data: Array<CompoundPublicWithDetails>;
     /**
      * Count
      */
@@ -1271,6 +1465,16 @@ export type compoundsReadCompoundsData = {
          * Limit
          */
         limit?: number;
+        /**
+         * Status
+         */
+        status?: CompoundStatus | null;
+        /**
+         * Q
+         *
+         * Substring of the id, names, CAS number or an alias
+         */
+        q?: string | null;
     };
     url: '/api/v1/compounds/';
 };
@@ -1313,10 +1517,40 @@ export type compoundsCreateCompoundResponses = {
     /**
      * Successful Response
      */
-    200: CompoundPublic;
+    200: CompoundPublicWithDetails;
 };
 
 export type compoundsCreateCompoundResponse = compoundsCreateCompoundResponses[keyof compoundsCreateCompoundResponses];
+
+export type compoundsResolveCompoundData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Name
+         */
+        name: string;
+    };
+    url: '/api/v1/compounds/resolve';
+};
+
+export type compoundsResolveCompoundErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type compoundsResolveCompoundError = compoundsResolveCompoundErrors[keyof compoundsResolveCompoundErrors];
+
+export type compoundsResolveCompoundResponses = {
+    /**
+     * Successful Response
+     */
+    200: CompoundPublicWithDetails;
+};
+
+export type compoundsResolveCompoundResponse = compoundsResolveCompoundResponses[keyof compoundsResolveCompoundResponses];
 
 export type compoundsDeleteCompoundData = {
     body?: never;
@@ -1373,7 +1607,7 @@ export type compoundsReadCompoundResponses = {
     /**
      * Successful Response
      */
-    200: CompoundPublic;
+    200: CompoundPublicWithDetails;
 };
 
 export type compoundsReadCompoundResponse = compoundsReadCompoundResponses[keyof compoundsReadCompoundResponses];
@@ -1403,10 +1637,138 @@ export type compoundsUpdateCompoundResponses = {
     /**
      * Successful Response
      */
-    200: CompoundPublic;
+    200: CompoundPublicWithDetails;
 };
 
 export type compoundsUpdateCompoundResponse = compoundsUpdateCompoundResponses[keyof compoundsUpdateCompoundResponses];
+
+export type compoundsCreateAliasData = {
+    body: CompoundAliasCreate;
+    path: {
+        /**
+         * Compound Id
+         */
+        compound_id: string;
+    };
+    query?: never;
+    url: '/api/v1/compounds/{compound_id}/aliases';
+};
+
+export type compoundsCreateAliasErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type compoundsCreateAliasError = compoundsCreateAliasErrors[keyof compoundsCreateAliasErrors];
+
+export type compoundsCreateAliasResponses = {
+    /**
+     * Successful Response
+     */
+    200: CompoundAliasPublic;
+};
+
+export type compoundsCreateAliasResponse = compoundsCreateAliasResponses[keyof compoundsCreateAliasResponses];
+
+export type compoundsDeleteAliasData = {
+    body?: never;
+    path: {
+        /**
+         * Compound Id
+         */
+        compound_id: string;
+        /**
+         * Alias Id
+         */
+        alias_id: number;
+    };
+    query?: never;
+    url: '/api/v1/compounds/{compound_id}/aliases/{alias_id}';
+};
+
+export type compoundsDeleteAliasErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type compoundsDeleteAliasError = compoundsDeleteAliasErrors[keyof compoundsDeleteAliasErrors];
+
+export type compoundsDeleteAliasResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type compoundsDeleteAliasResponse = compoundsDeleteAliasResponses[keyof compoundsDeleteAliasResponses];
+
+export type compoundsCreateBoilingPointData = {
+    body: BoilingPointCreate;
+    path: {
+        /**
+         * Compound Id
+         */
+        compound_id: string;
+    };
+    query?: never;
+    url: '/api/v1/compounds/{compound_id}/boiling-points';
+};
+
+export type compoundsCreateBoilingPointErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type compoundsCreateBoilingPointError = compoundsCreateBoilingPointErrors[keyof compoundsCreateBoilingPointErrors];
+
+export type compoundsCreateBoilingPointResponses = {
+    /**
+     * Successful Response
+     */
+    200: BoilingPointPublic;
+};
+
+export type compoundsCreateBoilingPointResponse = compoundsCreateBoilingPointResponses[keyof compoundsCreateBoilingPointResponses];
+
+export type compoundsDeleteBoilingPointData = {
+    body?: never;
+    path: {
+        /**
+         * Compound Id
+         */
+        compound_id: string;
+        /**
+         * Boiling Point Id
+         */
+        boiling_point_id: number;
+    };
+    query?: never;
+    url: '/api/v1/compounds/{compound_id}/boiling-points/{boiling_point_id}';
+};
+
+export type compoundsDeleteBoilingPointErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type compoundsDeleteBoilingPointError = compoundsDeleteBoilingPointErrors[keyof compoundsDeleteBoilingPointErrors];
+
+export type compoundsDeleteBoilingPointResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type compoundsDeleteBoilingPointResponse = compoundsDeleteBoilingPointResponses[keyof compoundsDeleteBoilingPointResponses];
 
 export type instrumentsReadInstrumentsData = {
     body?: never;

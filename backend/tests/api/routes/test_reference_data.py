@@ -14,7 +14,7 @@ from tests.utils.domain import (
 
 API = settings.API_V1_STR
 ENDPOINTS = {
-    "compounds": {"name": "Methane", "unit": "ppb"},
+    "compounds": {"iupac_name": "methane", "unit": "ppb"},
     "instruments": {"name": "Medusa GC-MS"},
     "containers": {"kind": "flask"},
 }

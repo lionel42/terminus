@@ -26,7 +26,7 @@ def random_time() -> datetime:
 
 
 def create_compound(db: Session) -> Compound:
-    compound = Compound(id=random_id(), name="Test compound", unit="ppb")
+    compound = Compound(id=random_id(), iupac_name="test compound", unit="ppb")
     db.add(compound)
     db.commit()
     db.refresh(compound)

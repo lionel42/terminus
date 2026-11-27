@@ -11,7 +11,8 @@ function extractErrorMessage(err: Error): string {
     }
     return err.message
   }
-  return "Something went wrong."
+  // Plain errors thrown by our own code (e.g. PubChem lookups)
+  return err?.message || "Something went wrong."
 }
 
 export const handleError = function (this: (msg: string) => void, err: Error) {
