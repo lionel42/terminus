@@ -17,6 +17,15 @@ const fillForm = async (
   await page.getByTestId("confirm-password-input").fill(confirm_password)
 }
 
+/**
+ * Answer the sign-up request in the browser, so these tests do not depend on
+ * USERS_OPEN_REGISTRATION on the server (it is off by default).
+ */
+const mockSignUp = (page: Page, status: number, body: unknown) =>
+  page.route("**/api/v1/users/signup", (route) =>
+    route.fulfill({ status, json: body }),
+  )
+
 const verifyInput = async (page: Page, testId: string) => {
   const input = page.getByTestId(testId)
   await expect(input).toBeVisible()
@@ -49,10 +58,18 @@ test("Sign up with valid name, email, and password", async ({ page }) => {
   const full_name = "Test User"
   const email = randomEmail()
   const password = randomPassword()
+  await mockSignUp(page, 200, {
+    id: crypto.randomUUID(),
+    email,
+    full_name,
+    is_active: true,
+    is_superuser: false,
+  })
 
   await page.goto("/signup")
   await fillForm(page, full_name, email, password, password)
   await page.getByRole("button", { name: "Sign Up" }).click()
+  await expect(page).toHaveURL(/\/login$/)
 })
 
 test("Sign up with invalid email", async ({ page }) => {
@@ -74,21 +91,33 @@ test("Sign up with existing email", async ({ page }) => {
   const fullName = "Test User"
   const email = randomEmail()
   const password = randomPassword()
+  await mockSignUp(page, 400, {
+    detail: "The user with this email already exists in the system",
+  })
 
   await page.goto("/signup")
-
-  await fillForm(page, fullName, email, password, password)
-  await page.getByRole("button", { name: "Sign Up" }).click()
-  await expect(page).toHaveURL(/\/login$/)
-
-  await page.goto("/signup")
-
   await fillForm(page, fullName, email, password, password)
   await page.getByRole("button", { name: "Sign Up" }).click()
 
   await expect(
     page.getByText("The user with this email already exists in the system"),
   ).toBeVisible()
+  await expect(page).toHaveURL(/\/signup$/)
+})
+
+test("Sign up while registration is disabled", async ({ page }) => {
+  const email = randomEmail()
+  const password = randomPassword()
+  await mockSignUp(page, 403, { detail: "Open user registration is disabled" })
+
+  await page.goto("/signup")
+  await fillForm(page, "Test User", email, password, password)
+  await page.getByRole("button", { name: "Sign Up" }).click()
+
+  await expect(
+    page.getByText("Open user registration is disabled"),
+  ).toBeVisible()
+  await expect(page).toHaveURL(/\/signup$/)
 })
 
 test("Sign up with weak password", async ({ page }) => {

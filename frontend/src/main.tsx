@@ -19,11 +19,21 @@ client.setConfig({
   auth: () => localStorage.getItem("access_token") || "",
 })
 
+/** 401, or the backend's 403 for an invalid/expired token (see api/deps.py). */
+const isSessionExpired = (error: AxiosError) => {
+  const status = error.response?.status
+  const detail = (error.response?.data as { detail?: unknown } | undefined)
+    ?.detail
+  return (
+    status === 401 ||
+    (status === 403 && detail === "Could not validate credentials")
+  )
+}
+
 const handleApiError = (error: Error) => {
-  if (
-    error instanceof AxiosError &&
-    [401, 403].includes(error.response?.status ?? 0)
-  ) {
+  // Other 403s (e.g. registration disabled, missing privileges) are shown as
+  // errors by the caller instead of logging the user out.
+  if (error instanceof AxiosError && isSessionExpired(error)) {
     localStorage.removeItem("access_token")
     window.location.href = "/login"
   }
